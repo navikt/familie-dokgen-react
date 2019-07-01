@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Knapp from 'nav-frontend-knapper';
+import Tabs from 'nav-frontend-tabs'
 
 
 export default class EditContainer extends Component {
@@ -8,6 +9,13 @@ export default class EditContainer extends Component {
         return (
             <div style={style.editContainer}>
                 <div style={style.textfieldContainer}> 
+                <Tabs 
+                        tabs={[
+                            {"label": "Markdown"},
+                            {"label": "Rich text"},
+                        ]}
+                        onChange={ () => {}} 
+                    />
                     <br/><p>Her skal teksteditoren komme </p>
                 </div>
                 <Knapp style={style.buttons} type="standard">Kompiler</Knapp>
