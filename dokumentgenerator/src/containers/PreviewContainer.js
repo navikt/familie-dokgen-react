@@ -8,17 +8,17 @@ export default class PreviewContainer extends Component {
         super()
 
         this.state = {
-            tab : ""
+            tab : 0
         }
     }
 
-    handleSelect(index) {
-        //???????
-        console.log(index)
+    handleSelect(event, index) {
+        this.setState({
+            tab : index
+        })
     }
 
     render(){
-        console.log(this.state.tab)
         return (
             <div style={style.previewContainer}>
                 <div style={style.actPreviewContainer}> 
@@ -29,7 +29,7 @@ export default class PreviewContainer extends Component {
                             {"label": "Mobil"},
                             {"label" : "PDF"}
                         ]}
-                        onChange={(tabs) => this.handleSelect(tabs.value)} 
+                        onChange={(event, index) => this.handleSelect(event, index)} 
                     />
                     <br/><p>Her skal forhåndsvisningen komme </p>
                 </div>

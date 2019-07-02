@@ -5,7 +5,22 @@ import Tabs from 'nav-frontend-tabs'
 
 export default class EditContainer extends Component {
 
+    constructor(){
+        super()
+
+        this.state = {
+            tab : 0
+        }
+    }
+
+    handleSelect(event, index) {
+        this.setState({
+            tab : index
+        })
+    }
+
     render(){
+        console.log("Tab i editor: " + this.state.tab)
         return (
             <div style={style.editContainer}>
                 <div style={style.textfieldContainer}> 
@@ -14,7 +29,7 @@ export default class EditContainer extends Component {
                             {"label": "Markdown"},
                             {"label": "Rich text"},
                         ]}
-                        onChange={ () => {}} 
+                        onChange={ (event, index) => {this.handleSelect(event, index)}} 
                     />
                     <br/><p>Her skal teksteditoren komme </p>
                 </div>

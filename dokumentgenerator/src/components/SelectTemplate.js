@@ -19,7 +19,6 @@ export default class SelectTemplate extends Component {
     }
 
     render() {
-        console.log(this.state.value)
         return (
             <div style={style.selectContainer}>
                 <Select label='Hvilken mal vil du redigere?'
