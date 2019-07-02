@@ -9,7 +9,6 @@ export default class DisplayContainer extends Component {
     render(){
         return (
             <div style={style.displayContainer}>
-                <h1>Dokumentgenerator</h1>
                 <SelectTemplate/>
                 <div style={style.displayFlex}>
                     <div style={style.borderView}>
@@ -28,7 +27,8 @@ export default class DisplayContainer extends Component {
 
 const style = {
     displayContainer : {
-        height : "100%"
+        height : "100%",
+        margin: "2%"
     },
     displayFlex : {
         height : "100%",

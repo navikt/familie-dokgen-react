@@ -20,7 +20,6 @@ export default class EditContainer extends Component {
     }
 
     render(){
-        console.log("Tab i editor: " + this.state.tab)
         return (
             <div style={style.editContainer}>
                 <div style={style.textfieldContainer}> 
