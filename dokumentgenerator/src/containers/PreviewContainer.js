@@ -34,7 +34,6 @@ export default class PreviewContainer extends Component {
                     <br/><p>Her skal forhåndsvisningen komme </p>
                 </div>
                 <div style={style.buttonContainer}>
-                    <Knapp style={style.buttons} type="standard">Lagre endringer</Knapp>
                     <Knapp style={style.buttons} type="standard">Last ned</Knapp>
                 </div>
             </div>
@@ -55,9 +54,10 @@ const style = {
     },
     buttonContainer : {
         display: "flex",
-        justifyContent : "space-evenly"
+        justifyContent : "center"
     },
     buttons : {
-        width: "250px"
+        width: "30%",
+        margin: "1%"
     },
 }

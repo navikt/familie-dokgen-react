@@ -32,7 +32,6 @@ export default class EditContainer extends Component {
                     />
                     <br/><p>Her skal teksteditoren komme </p>
                 </div>
-                <Knapp style={style.buttons} type="standard">Kompiler</Knapp>
             </div>
         )
     }
@@ -49,8 +48,5 @@ const style = {
         margin: "auto",
         marginBottom: "2%",
         backgroundColor: "#F5F5F5"
-    },
-    buttons : {
-        width: "250px"
     }
 }

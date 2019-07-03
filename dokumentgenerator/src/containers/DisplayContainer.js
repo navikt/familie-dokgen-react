@@ -38,7 +38,6 @@ const style = {
     }, 
     borderView : { 
         width : "45%",
-        height : "75%",
-        backgroundColor: "#FFFFFF"
+        height : "80%"
     }
 }

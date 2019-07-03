@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
 import { Select } from 'nav-frontend-skjema';
+import { connect } from 'react-redux';
+import { setTemplateType } from '../redux/actions/templateAction';
 
-export default class SelectTemplate extends Component { 
-
-    constructor(){
-        super()
-
-        this.state = {
-            value : ''
-        }
-    }
+class SelectTemplate extends Component { 
 
     handleChange(event) {
         let selected = event.target.value;
-        this.setState({
-            value : selected
-        });
+        this.props.setTemplateType(selected);
     }
 
     render() {
@@ -33,6 +25,17 @@ export default class SelectTemplate extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    ...state,
+    templateType : state.templateReducer.selectedTemplate
+   });
+
+const mapDispatchToProps = dispatch => ({
+    setTemplateType: (selected) => dispatch(setTemplateType(selected))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) ( SelectTemplate );
 
 const style = {
     selectContainer : {
