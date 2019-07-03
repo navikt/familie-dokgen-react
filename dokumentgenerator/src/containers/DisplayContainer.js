@@ -13,11 +13,11 @@ export default class DisplayContainer extends Component {
                 <div style={style.displayFlex}>
                     <div style={style.borderView}>
                         <h2>Redigering</h2>
-                        <EditContainer/>
+                        <EditContainer style={style}/>
                     </div>
                     <div style={style.borderView}>
                         <h2>Forhåndsvisning</h2>
-                        <PreviewContainer/>
+                        <PreviewContainer style={style}/>
                     </div>
                 </div>
             </div>
@@ -37,8 +37,17 @@ const style = {
         margin: "2%",
     }, 
     borderView : { 
-        width : "45%",
-        height : "75%",
-        backgroundColor: "#FFFFFF"
+        width : "60%",
+        height : "80%"
+    },
+    subContainer : {
+        height: "100%"
+    },
+    subsubContainer : {
+        height: "75%",
+        width: "95%",
+        margin: "auto",
+        marginBottom: "2%",
+        backgroundColor: "#F5F5F5"
     }
 }
