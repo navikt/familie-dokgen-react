@@ -20,8 +20,8 @@ export default class PreviewContainer extends Component {
 
     render(){
         return (
-            <div style={style.previewContainer}>
-                <div style={style.actPreviewContainer}> 
+            <div style={this.props.style.subContainer}>
+                <div style={this.props.style.subsubContainer}> 
                     <Tabs 
                         tabs={[
                             {"label": "Web"},
@@ -42,16 +42,6 @@ export default class PreviewContainer extends Component {
 }
 
 const style = {
-    previewContainer : { 
-        height: "100%"
-    },
-    actPreviewContainer : {
-        height: "75%",
-        width: "80%",
-        margin: "auto",
-        marginBottom: "2%",
-        backgroundColor: "#F5F5F5"
-    },
     buttonContainer : {
         display: "flex",
         justifyContent : "center"
