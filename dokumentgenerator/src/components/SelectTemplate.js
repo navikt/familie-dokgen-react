@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Select } from 'nav-frontend-skjema';
 import { connect } from 'react-redux';
-import { setTemplateType, getTemplateNames } from '../redux/actions/templateAction';
-import uuid from 'uuid'
+import { setTemplateType, getTemplateNames, getTemplateContent } from '../redux/actions/templateAction';
 
 class SelectTemplate extends Component { 
 
@@ -20,7 +19,7 @@ class SelectTemplate extends Component {
 
         const templateList = this.props.templates
         listItems = templateList.map((w) =>  
-        <option className="listItem" key={uuid()} > {w} </option>)
+        <option className="listItem" key={w}  > {w} </option>)
         return (
             <div style={style.selectContainer}>
                 <Select label='Hvilken mal vil du redigere?'
@@ -35,13 +34,14 @@ class SelectTemplate extends Component {
 
 const mapStateToProps = state => ({
     ...state,
-    templateType : state.templateReducer.selectedTemplate,
+    selectedTemplate : state.templateReducer.selectedTemplate,
     templates : state.templateReducer.templateNames
    });
 
 const mapDispatchToProps = dispatch => ({
     setTemplateType: (selected) => dispatch(setTemplateType(selected)),
-    getTemplateNames : () => dispatch(getTemplateNames())
+    getTemplateNames : () => dispatch(getTemplateNames()),
+    getTemplateContent : (name) => dispatch(getTemplateContent(name))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) ( SelectTemplate );

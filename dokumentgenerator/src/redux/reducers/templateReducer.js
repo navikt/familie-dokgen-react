@@ -1,8 +1,9 @@
-import { SET_TEMPLATE_TYPE, GET_TEMPLATE_NAMES } from "../actions/templateAction";
+import { SET_TEMPLATE_TYPE, GET_TEMPLATE_NAMES, GET_TEMPLATE_CONTENT } from "../actions/templateAction";
 
 const initialState = { 
     selectedTemplate : "",
-    templateNames : []
+    templateNames : [],
+    templateContent : ""
 }
 
 export default (state = initialState, action) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action) => {
             ...state,
             templateNames: action.payload
         }
+    case GET_TEMPLATE_CONTENT:
+      return {
+          ...state,
+          templateContent: action.payload
+      }
      default:
       return state
     }

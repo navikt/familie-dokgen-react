@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Tabs from 'nav-frontend-tabs'
+import Tabs from 'nav-frontend-tabs';
+import Editor from '../components/Editor'
 
 
 export default class EditContainer extends Component {
@@ -30,6 +31,7 @@ export default class EditContainer extends Component {
                         onChange={ (event, index) => {this.handleSelect(event, index)}} 
                     />
                     <br/><p>Her skal teksteditoren komme </p>
+                    <Editor/>
                 </div>
             </div>
         )
