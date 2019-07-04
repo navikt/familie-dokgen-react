@@ -7,7 +7,6 @@ class Editor extends Component {
     render(){
         return (
             <div>
-                <p>Hallo</p>
                 {this.props.templateContent}
             </div>
         )
