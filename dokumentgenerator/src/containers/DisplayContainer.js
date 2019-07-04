@@ -48,6 +48,7 @@ const style = {
         width: "95%",
         margin: "auto",
         marginBottom: "2%",
-        backgroundColor: "#F5F5F5"
+        backgroundColor: "#F5F5F5",
+        overflow : "scroll"
     }
 }
