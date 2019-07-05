@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Knapp from 'nav-frontend-knapper'
 import Tabs from 'nav-frontend-tabs';
+import Preview from "../components/Preview";
 
 export default class PreviewContainer extends Component {
 
@@ -31,7 +32,7 @@ export default class PreviewContainer extends Component {
                         ]}
                         onChange={(event, index) => this.handleSelect(event, index)} 
                     />
-                    <br/><p>Her skal forhåndsvisningen komme </p>
+                   <Preview/>
                 </div>
                 <div style={style.buttonContainer}>
                     <Knapp style={style.buttons} type="standard">Last ned</Knapp>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Select } from 'nav-frontend-skjema';
 import { connect } from 'react-redux';
-import { setTemplateType, getTemplateNames, getTemplateContent } from '../redux/actions/templateAction';
+import { setTemplateType, getTemplateNames, getTemplateContentInMarkdown } from '../redux/actions/templateAction';
 
 class SelectTemplate extends Component { 
 
@@ -41,13 +41,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setTemplateType: (selected) => dispatch(setTemplateType(selected)),
-    getTemplateNames : () => dispatch(getTemplateNames()),
-    getTemplateContent : (name) => dispatch(getTemplateContent(name))
-})
+    getTemplateNames : () => dispatch(getTemplateNames())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps) ( SelectTemplate );
 
 const style = {
     selectContainer : {
     }
-}
+};

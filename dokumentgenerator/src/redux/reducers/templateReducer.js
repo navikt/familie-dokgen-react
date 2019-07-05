@@ -1,9 +1,10 @@
-import { SET_TEMPLATE_TYPE, GET_TEMPLATE_NAMES, GET_TEMPLATE_CONTENT } from "../actions/templateAction";
+import { SET_TEMPLATE_TYPE, GET_TEMPLATE_NAMES, GET_TEMPLATE_CONTENT_MARKDOWN, GET_TEMPLATE_CONTENT_HTML } from "../actions/templateAction";
 
 const initialState = { 
     selectedTemplate : "",
     templateNames : [],
-    templateContent : ""
+    editorContent : "",
+    previewContent : ""
 }
 
 export default (state = initialState, action) => {
@@ -12,17 +13,22 @@ export default (state = initialState, action) => {
       return {
         ...state, 
        selectedTemplate: action.payload
-      }
+      };
     case GET_TEMPLATE_NAMES:
         return {
             ...state,
             templateNames: action.payload
-        }
-    case GET_TEMPLATE_CONTENT:
+        };
+    case GET_TEMPLATE_CONTENT_MARKDOWN:
       return {
           ...state,
-          templateContent: action.payload
-      }
+          editorContent: action.payload
+      };
+    case GET_TEMPLATE_CONTENT_HTML:
+        return {
+            ...state,
+            previewContent: action.payload
+        };
      default:
       return state
     }

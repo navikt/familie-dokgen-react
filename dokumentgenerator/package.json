@@ -2,6 +2,7 @@
   "name": "dokumentgenerator",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@craco/craco": "^5.2.3",
     "axios": "^0.19.0",
