@@ -26,7 +26,7 @@ class Editor extends Component {
 
     render(){
         return (
-            <div style={{height:"100%"}}>
+            <div style={{height:"100%", overflow:"hidden"}}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"
@@ -59,8 +59,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
     aceEdit : {
-        width:"95%",
-        margin:"1%",
-        height: "100%"
+        width:"100%",
+        height: "95%"
     }
 };

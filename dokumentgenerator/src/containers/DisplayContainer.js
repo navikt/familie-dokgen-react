@@ -41,14 +41,11 @@ const style = {
         height : "80%"
     },
     subContainer : {
-        height: "100%"
+        height: "100%",
     },
     subsubContainer : {
         height: "85%",
         width: "95%",
-        margin: "auto",
-        marginBottom: "2%",
-        backgroundColor: "#F5F5F5",
-        overflow: "scroll"
+        margin: "2%"
     }
 }

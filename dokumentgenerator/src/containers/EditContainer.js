@@ -29,6 +29,7 @@ export default class EditContainer extends Component {
                             {"label": "Rich text"},
                         ]}
                         onChange={ (event, index) => {this.handleSelect(event, index)}} 
+                        style={{backgroundColor: "#F5F5F5"}}
                     />
                     <Editor/>
                 </div>

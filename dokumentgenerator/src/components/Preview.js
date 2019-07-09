@@ -12,7 +12,7 @@ class Preview extends Component {
 
     render(){
         return (
-            <div dangerouslySetInnerHTML={this.createPreview()}/>
+            <div style={style.previewContainer} dangerouslySetInnerHTML={this.createPreview()}/>
         )
     }
 }
@@ -24,3 +24,11 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps) (Preview)
+
+const style = {
+    previewContainer : {
+        overflow: "scroll",
+        height: "95%",
+        backgroundColor: "white"
+    }
+}
