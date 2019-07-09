@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-export const SET_TEMPLATE_TYPE = 'SET_TEMPLATE_TYPE';
+export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const GET_TEMPLATE_NAMES = 'GET_TEMPLATE_NAMES';
 export const GET_TEMPLATE_CONTENT_MARKDOWN = 'GET_TEMPLATE_CONTENT_MARKDOWN';
 export const GET_TEMPLATE_CONTENT_HTML = 'GET_TEMPLATE_CONTENT_HTML';
+export const UPDATE_EDITOR_CONTENT = 'UPDATE_EDITOR_CONTENT';
 
-export const setTemplateType = (selected) => dispatch => {
+export const selectedTemplate = (selected) => dispatch => {
     dispatch({
-        type: SET_TEMPLATE_TYPE,
+        type: SELECTED_TEMPLATE,
         payload: selected
     });
     dispatch(getTemplateContentInMarkdown(selected));
@@ -33,18 +34,26 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 };
 
 export const getTemplateContentInHTML = (name) => dispatch => {
-    console.log("Here");
+    console.log("Henter HTML versjonen");
     axios.get("maler/html/" + name).then(res =>
         dispatch({
             type: GET_TEMPLATE_CONTENT_HTML,
             payload: res.data
         })
     );
+
 };
 
 export const updateTemplateContent = (name, content) => {
-    console.log("jeg kjører");
-    axios.post("maler/" + name, content, {
+    return axios.post("maler/" + name, content, {
         headers: {'Content-Type': 'text/plain'}
-    })
+    });
 };
+
+export const updateEditorContent = (content) => dispatch => {
+    dispatch({
+        type: UPDATE_EDITOR_CONTENT,
+        payload: content
+    });
+
+}

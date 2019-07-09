@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
-import {getTemplateNames, setTemplateType, updateTemplateContent} from "../redux/actions/templateAction";
+import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
 
 
 class Editor extends Component {
@@ -17,11 +17,14 @@ class Editor extends Component {
     }
 
     onChange = (newValue) => {
-        updateTemplateContent(this.props.selectedTemplate, newValue);
+        this.props.updateEditorContent(newValue);
+        updateTemplateContent(this.props.selectedTemplate, newValue).then(res => {
+            console.log("res", res);
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
+        });
     };
 
     render(){
-        console.log(this.props.selectedTemplate);
         return (
             <div>
                 <AceEditor 
@@ -44,7 +47,13 @@ const mapStateToProps = state => ({
     editorContent : state.templateReducer.editorContent
 });
 
-export default connect(mapStateToProps) (Editor)
+
+const mapDispatchToProps = dispatch => ({
+    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
+    updateEditorContent: (content) => dispatch(updateEditorContent(content))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
     aceEdit : {

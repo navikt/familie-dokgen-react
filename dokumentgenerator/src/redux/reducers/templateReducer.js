@@ -1,4 +1,10 @@
-import { SET_TEMPLATE_TYPE, GET_TEMPLATE_NAMES, GET_TEMPLATE_CONTENT_MARKDOWN, GET_TEMPLATE_CONTENT_HTML } from "../actions/templateAction";
+import {
+    SELECTED_TEMPLATE,
+    GET_TEMPLATE_NAMES,
+    GET_TEMPLATE_CONTENT_MARKDOWN,
+    GET_TEMPLATE_CONTENT_HTML,
+    UPDATE_EDITOR_CONTENT
+} from "../actions/templateAction";
 
 const initialState = { 
     selectedTemplate : "",
@@ -9,7 +15,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-     case SET_TEMPLATE_TYPE:
+     case SELECTED_TEMPLATE:
       return {
         ...state, 
        selectedTemplate: action.payload
@@ -29,6 +35,11 @@ export default (state = initialState, action) => {
             ...state,
             previewContent: action.payload
         };
+        case UPDATE_EDITOR_CONTENT:
+            return {
+                ...state,
+                editorContent: action.payload
+            };
      default:
       return state
     }

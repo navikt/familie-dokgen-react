@@ -6,7 +6,7 @@ import Preview from "../components/Preview";
 export default class PreviewContainer extends Component {
 
     constructor(){
-        super()
+        super();
 
         this.state = {
             tab : 0
@@ -51,4 +51,4 @@ const style = {
         width: "30%",
         margin: "1%"
     },
-}
+};

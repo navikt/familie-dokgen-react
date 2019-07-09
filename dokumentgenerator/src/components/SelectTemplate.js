@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Select } from 'nav-frontend-skjema';
-import { connect } from 'react-redux';
-import { setTemplateType, getTemplateNames, getTemplateContentInMarkdown } from '../redux/actions/templateAction';
+import React, {Component} from 'react';
+import {Select} from 'nav-frontend-skjema';
+import {connect} from 'react-redux';
+import {selectedTemplate, getTemplateNames, getTemplateContentInMarkdown} from '../redux/actions/templateAction';
 
-class SelectTemplate extends Component { 
+class SelectTemplate extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getTemplateNames();
     }
 
@@ -15,18 +15,18 @@ class SelectTemplate extends Component {
     }
 
     render() {
-        let listItems = []
+        let listItems;
 
-        const templateList = this.props.templates
-        listItems = templateList.map((w) =>  
-        <option className="listItem" key={w}  > {w} </option>)
+        const templateList = this.props.templates;
+        listItems = templateList.map((w) =>
+            <option className="listItem" key={w}> {w} </option>);
         return (
             <div style={style.selectContainer}>
                 <Select label='Hvilken mal vil du redigere?'
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}>
-                        <option key="">Velg en mal</option>
-                        {listItems}
+                    <option key="">Velg en mal</option>
+                    {listItems}
                 </Select>
             </div>
         )
@@ -35,18 +35,17 @@ class SelectTemplate extends Component {
 
 const mapStateToProps = state => ({
     ...state,
-    selectedTemplate : state.templateReducer.selectedTemplate,
-    templates : state.templateReducer.templateNames
-   });
-
-const mapDispatchToProps = dispatch => ({
-    setTemplateType: (selected) => dispatch(setTemplateType(selected)),
-    getTemplateNames : () => dispatch(getTemplateNames())
+    selectedTemplate: state.templateReducer.selectedTemplate,
+    templates: state.templateReducer.templateNames
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) ( SelectTemplate );
+const mapDispatchToProps = dispatch => ({
+    setTemplateType: (selected) => dispatch(selectedTemplate(selected)),
+    getTemplateNames: () => dispatch(getTemplateNames())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectTemplate);
 
 const style = {
-    selectContainer : {
-    }
+    selectContainer: {}
 };
