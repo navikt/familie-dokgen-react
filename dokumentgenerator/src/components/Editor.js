@@ -26,7 +26,7 @@ class Editor extends Component {
 
     render(){
         return (
-            <div>
+            <div style={{height:"100%"}}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"
@@ -35,6 +35,7 @@ class Editor extends Component {
                     editorProps={{$blockScrolling: true}}
                     value={this.props.editorContent}
                     style={style.aceEdit}
+                    readOnly={this.props.readOnly}
                     />
             </div>
         )
@@ -44,7 +45,8 @@ class Editor extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
-    editorContent : state.templateReducer.editorContent
+    editorContent : state.templateReducer.editorContent,
+    readOnly: state.templateReducer.readOnly
 });
 
 
@@ -57,7 +59,8 @@ export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
     aceEdit : {
-        width:"100%",
-        margin:"1%"
+        width:"95%",
+        margin:"1%",
+        height: "100%"
     }
 };

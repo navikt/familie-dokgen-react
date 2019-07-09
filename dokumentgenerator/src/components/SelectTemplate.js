@@ -25,7 +25,7 @@ class SelectTemplate extends Component {
                 <Select label='Hvilken mal vil du redigere?'
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}>
-                    <option key="">Velg en mal</option>
+                    <option key="" value="">Velg en mal</option>
                     {listItems}
                 </Select>
             </div>
