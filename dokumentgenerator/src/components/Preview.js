@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {getTemplateContentInHTML} from "../redux/actions/templateAction";
 
 
 class Preview extends Component {
@@ -8,11 +9,15 @@ class Preview extends Component {
         return {__html: this.props.previewContent};
     }
 
-
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if(prevProps.selectedTemplate !== this.props.selectedTemplate){
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
+        }
+    }
 
     render(){
         return (
-            <div style={style.previewContainer} dangerouslySetInnerHTML={this.createPreview()}/>
+            <iframe srcDoc={this.props.previewContent} style={style.previewContainer}/>
         )
     }
 }
@@ -23,11 +28,15 @@ const mapStateToProps = state => ({
     previewContent : state.templateReducer.previewContent
 });
 
-export default connect(mapStateToProps) (Preview)
+const mapDispatchToProps = dispatch => ({
+    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps) (Preview)
 
 const style = {
     previewContainer : {
-        overflow: "scroll",
+        overflowY: "scroll",
         height: "95%",
         backgroundColor: "white"
     }
