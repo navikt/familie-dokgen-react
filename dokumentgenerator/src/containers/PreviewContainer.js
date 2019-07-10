@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Knapp from 'nav-frontend-knapper'
 import Tabs from 'nav-frontend-tabs';
+import Preview from "../components/Preview";
 
 export default class PreviewContainer extends Component {
 
     constructor(){
-        super()
+        super();
 
         this.state = {
             tab : 0
@@ -30,8 +31,9 @@ export default class PreviewContainer extends Component {
                             {"label" : "PDF"}
                         ]}
                         onChange={(event, index) => this.handleSelect(event, index)} 
+                        style={{backgroundColor: "#F5F5F5"}}
                     />
-                    <br/><p>Her skal forhåndsvisningen komme </p>
+                        <Preview/>
                 </div>
                 <div style={style.buttonContainer}>
                     <Knapp style={style.buttons} type="standard">Last ned</Knapp>
@@ -50,4 +52,4 @@ const style = {
         width: "30%",
         margin: "1%"
     },
-}
+};

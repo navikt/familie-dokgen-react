@@ -1,27 +1,41 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import AceEditor from 'react-ace';
-import brace from 'brace'
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
+import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
+
 
 class Editor extends Component {
 
-    onChange(newValue){
-        console.log("change" + newValue)
+    constructor(props){
+        super(props);
+
+        this.state={
+            selectedTemplate : this.props.selectedTemplate
+        }
     }
+
+    onChange = (newValue) => {
+        this.props.updateEditorContent(newValue);
+        updateTemplateContent(this.props.selectedTemplate, newValue).then(res => {
+            console.log("res", res);
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
+        });
+    };
 
     render(){
         return (
-            <div>
+            <div style={{height:"100%", overflow:"hidden"}}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"
-                    onChange={this.onChange}
+                    onChange={this.onChange.bind(this)}
                     name="UNIQUE_ID_OF_DIV"
                     editorProps={{$blockScrolling: true}}
-                    value={this.props.templateContent}
+                    value={this.props.editorContent}
                     style={style.aceEdit}
+                    readOnly={this.props.readOnly}
                     />
             </div>
         )
@@ -30,14 +44,22 @@ class Editor extends Component {
 
 const mapStateToProps = state => ({
     ...state,
-    templateContent : state.templateReducer.templateContent
-   });
+    selectedTemplate : state.templateReducer.selectedTemplate,
+    editorContent : state.templateReducer.editorContent,
+    readOnly: state.templateReducer.readOnly
+});
 
-export default connect(mapStateToProps) (Editor)
+
+const mapDispatchToProps = dispatch => ({
+    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
+    updateEditorContent: (content) => dispatch(updateEditorContent(content))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
     aceEdit : {
         width:"100%",
-        margin:"1%"
+        height: "95%"
     }
-}
+};
