@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Select} from 'nav-frontend-skjema';
 import {connect} from 'react-redux';
-import {selectedTemplate, getTemplateNames, getTemplateContentInMarkdown} from '../redux/actions/templateAction';
+import {selectedTemplate, getTemplateNames} from '../redux/actions/templateAction';
 
 class SelectTemplate extends Component {
 

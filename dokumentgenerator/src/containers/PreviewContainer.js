@@ -33,7 +33,7 @@ export default class PreviewContainer extends Component {
                         onChange={(event, index) => this.handleSelect(event, index)} 
                         style={{backgroundColor: "#F5F5F5"}}
                     />
-                   <Preview/>
+                        <Preview/>
                 </div>
                 <div style={style.buttonContainer}>
                     <Knapp style={style.buttons} type="standard">Last ned</Knapp>

@@ -6,6 +6,7 @@ export const GET_TEMPLATE_CONTENT_MARKDOWN = 'GET_TEMPLATE_CONTENT_MARKDOWN';
 export const GET_TEMPLATE_CONTENT_HTML = 'GET_TEMPLATE_CONTENT_HTML';
 export const UPDATE_EDITOR_CONTENT = 'UPDATE_EDITOR_CONTENT';
 export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
+export const UPDATE_PREVIEW_URL = 'UPDATE_PREVIEW_URL';
 
 export const selectedTemplate = (selected) => dispatch => {
     dispatch({
@@ -16,7 +17,7 @@ export const selectedTemplate = (selected) => dispatch => {
         dispatch(clearEditorAndPreview());
     } else { 
         dispatch(getTemplateContentInMarkdown(selected));
-        dispatch(getTemplateContentInHTML(selected));
+        dispatch(updatePreviewURL(selected));
     }
 };
 
@@ -66,5 +67,12 @@ export const updateEditorContent = (content) => dispatch => {
 export const clearEditorAndPreview = () => dispatch => {
     dispatch({
         type: CLEAR_EDITOR_AND_PREVIEW
+    })
+}
+
+export const updatePreviewURL = (name) => dispatch => {
+    dispatch({
+        type: UPDATE_PREVIEW_URL,
+        payload: name
     })
 }

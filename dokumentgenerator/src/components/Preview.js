@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Iframe from 'react-iframe'
 
 
 class Preview extends Component {
 
-    createPreview() {
-        return {__html: this.props.previewContent};
-    }
-
-
-
     render(){
         return (
-            <div style={style.previewContainer} dangerouslySetInnerHTML={this.createPreview()}/>
+            <div style={style.previewContainer}>  
+                <Iframe url={this.props.previewURL}
+                    width="450px"
+                    height="450px"
+                    id="myId"
+                    className="myClassname"
+                    display="initial"
+                    position="relative"/>
+            </div>
         )
     }
 }
@@ -20,14 +23,15 @@ class Preview extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
-    previewContent : state.templateReducer.previewContent
+    previewContent : state.templateReducer.previewContent,
+    previewURL :state.templateReducer.previewURL
 });
 
 export default connect(mapStateToProps) (Preview)
 
 const style = {
     previewContainer : {
-        overflow: "scroll",
+        overflowY: "scroll",
         height: "95%",
         backgroundColor: "white"
     }
