@@ -5,6 +5,7 @@ import {getTemplateContentInHTML} from "../redux/actions/templateAction";
 
 class Preview extends Component {
 
+
     componentDidUpdate(prevProps, prevState, snapshot){
         if(prevProps.selectedTemplate !== this.props.selectedTemplate){
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
@@ -23,7 +24,8 @@ class Preview extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
-    previewContent : state.templateReducer.previewContent
+    previewContent : state.templateReducer.previewContent,
+    previewURL :state.templateReducer.previewURL
 });
 
 const mapDispatchToProps = dispatch => ({
