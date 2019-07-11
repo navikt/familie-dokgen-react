@@ -12,9 +12,10 @@ class Preview extends Component {
     }
 
     render(){
+        console.log("props i preview: " + this.props.stylingClassName)
         return (
             <div style={style.previewContainer}>
-                <iframe title="previewFrame" srcDoc={this.props.previewContent} style={style.previewContainer}/>
+                <iframe style={style.Web} title="previewFrame" srcDoc={this.props.previewContent}/>
             </div>
         )
     }
@@ -37,5 +38,17 @@ const style = {
         overflowY: "scroll",
         height: "95%",
         backgroundColor: "white"
+    },
+    Web : {
+        backgroundColor : "red"
+    },
+    Nettbrett : {
+        backgroundColor : "pink"
+    }, 
+    Mobil : {
+        backgroundColor : "green"
+    },
+    PDF : { 
+        backgroundColor : "blue"
     }
 }

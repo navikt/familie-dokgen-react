@@ -19,14 +19,13 @@ class Editor extends Component {
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
         updateTemplateContent(this.props.selectedTemplate, newValue) /*.then(res => {
-            console.log("res", res);
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
         }); */
     };
 
     render(){
         return (
-            <div style={{height:"100%", overflow:"hidden"}}>
+            <div style={{height:"100%"}}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"

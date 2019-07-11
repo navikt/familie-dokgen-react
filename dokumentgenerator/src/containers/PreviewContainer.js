@@ -11,31 +11,37 @@ class PreviewContainer extends Component {
         super();
 
         this.state = {
-            tab : 0
+            tabNames : ["Web", "Nettbrett", "Mobil", "PDF"],
+            chosenTab : 0,
+            stylingClassName : "Web"
         }
     }
 
     handleSelect(event, index) {
         this.setState({
-            tab : index
+            chosenTab : index,
+            stylingClassName : this.state.tabNames[index]
         })
     }
 
     render(){
+        console.log(this.state.tabNames)
+        console.log("Valgt tab: " + this.state.chosenTab)
+        console.log("klassenavn: " + this.state.stylingClassName)
         return (
             <div style={this.props.style.subContainer}>
                 <div style={this.props.style.subsubContainer}> 
                     <Tabs 
                         tabs={[
-                            {"label": "Web"},
-                            {"label": "Nettbrett"},
-                            {"label": "Mobil"},
-                            {"label" : "PDF"}
+                            {"label": this.state.tabNames[0]},
+                            {"label": this.state.tabNames[1]},
+                            {"label": this.state.tabNames[2]},
+                            {"label" : this.state.tabNames[3]}
                         ]}
                         onChange={(event, index) => this.handleSelect(event, index)} 
                         style={{backgroundColor: "#F5F5F5"}}
                     />
-                   <Preview/>
+                   <Preview stylingClassName={this.state.stylingClassName}/>
                 </div>
                 <div style={style.buttonContainer}>
                     <Knapp style={style.buttons} type="standard" onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
@@ -65,5 +71,5 @@ const style = {
     buttons : {
         width: "30%",
         margin: "1%"
-    },
+    }
 };
