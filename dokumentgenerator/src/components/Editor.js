@@ -25,7 +25,7 @@ class Editor extends Component {
 
     render(){
         return (
-            <div style={{height:"100%"}}>
+            <div style={style.editorContainer}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"
@@ -57,8 +57,13 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
+    editorContainer : {
+        height: "100%",
+        border: "1px solid #F5F5F5", 
+        borderTop: "none"
+    },
     aceEdit : {
         width:"100%",
-        height: "95%"
+        height: "100%"
     }
 };

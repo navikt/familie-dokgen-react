@@ -44,8 +44,8 @@ class PreviewContainer extends Component {
                    <Preview stylingClassName={this.state.stylingClassName}/>
                 </div>
                 <div style={style.buttonContainer}>
-                    <Knapp style={style.buttons} type="standard" onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
-                    <Knapp style={style.buttons} type="standard">Last ned</Knapp>
+                    <Knapp style={style.buttons} type="standard" mini onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
+                    <Knapp style={style.buttons} type="standard" mini>Last ned</Knapp>
                 </div>
             </div>
         )
@@ -66,10 +66,11 @@ export default connect(mapStateToProps, mapDispatchToProps) (PreviewContainer)
 const style = {
     buttonContainer : {
         display: "flex",
-        justifyContent : "center"
+        justifyContent : "center",
+        padding: "2%"
     },
     buttons : {
-        width: "30%",
-        margin: "1%"
+        width: "20%",
+        margin: "3%"
     }
 };

@@ -26,7 +26,7 @@ export default class EditContainer extends Component {
                 <Tabs 
                         tabs={[
                             {"label": "Markdown"},
-                            {"label": "Rich text"},
+                            //{"label": "Rich text"},
                         ]}
                         onChange={ (event, index) => {this.handleSelect(event, index)}} 
                         style={{backgroundColor: "#F5F5F5"}}

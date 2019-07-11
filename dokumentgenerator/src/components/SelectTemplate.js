@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Select} from 'nav-frontend-skjema';
 import {connect} from 'react-redux';
-import {selectedTemplate, getTemplateNames, getTemplateContentInMarkdown} from '../redux/actions/templateAction';
+import {selectedTemplate, getTemplateNames} from '../redux/actions/templateAction';
 
 class SelectTemplate extends Component {
 
@@ -21,7 +21,7 @@ class SelectTemplate extends Component {
         listItems = templateList.map((w) =>
             <option className="listItem" key={w}> {w} </option>);
         return (
-            <div style={style.selectContainer}>
+            <div>
                 <Select label='Hvilken mal vil du redigere?'
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}>
@@ -45,7 +45,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectTemplate);
-
-const style = {
-    selectContainer: {}
-};
