@@ -5,10 +5,6 @@ import {getTemplateContentInHTML} from "../redux/actions/templateAction";
 
 class Preview extends Component {
 
-    createPreview() {
-        return {__html: this.props.previewContent};
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot){
         if(prevProps.selectedTemplate !== this.props.selectedTemplate){
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
@@ -17,7 +13,9 @@ class Preview extends Component {
 
     render(){
         return (
-            <iframe srcDoc={this.props.previewContent} style={style.previewContainer}/>
+            <div style={style.previewContainer}>
+                <iframe title="previewFrame" srcDoc={this.props.previewContent} style={style.previewContainer}/>
+            </div>
         )
     }
 }

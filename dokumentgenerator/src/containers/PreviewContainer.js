@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { getTemplateContentInHTML } from '../redux/actions/templateAction'
 import Knapp from 'nav-frontend-knapper'
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
 
-export default class PreviewContainer extends Component {
+class PreviewContainer extends Component {
 
     constructor(){
         super();
@@ -36,12 +38,24 @@ export default class PreviewContainer extends Component {
                    <Preview/>
                 </div>
                 <div style={style.buttonContainer}>
+                    <Knapp style={style.buttons} type="standard" onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
                     <Knapp style={style.buttons} type="standard">Last ned</Knapp>
                 </div>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    ...state,
+    selectedTemplate : state.templateReducer.selectedTemplate
+});
+
+const mapDispatchToProps = dispatch => ({
+    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps) (PreviewContainer)
 
 const style = {
     buttonContainer : {

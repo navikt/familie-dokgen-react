@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
@@ -18,10 +18,10 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        updateTemplateContent(this.props.selectedTemplate, newValue).then(res => {
+        updateTemplateContent(this.props.selectedTemplate, newValue) /*.then(res => {
             console.log("res", res);
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
-        });
+        }); */
     };
 
     render(){
