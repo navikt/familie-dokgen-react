@@ -1,7 +1,7 @@
-body {
+
+body{
   background-color: #E9E7E7;
 }
-
 body > #root > div {
   height: 100vh;
 }

@@ -28,20 +28,21 @@ export default class DisplayContainer extends Component {
 const style = {
     displayContainer : {
         height : "100%",
-        margin: "2%"
+        marginTop: "5px"
     },
     displayFlex : {
         height : "100%",
         display : "flex",
         justifyContent : "space-evenly",
-        margin: "2%",
+        margin: "1%",
     }, 
     borderView : { 
         width : "60%",
         height : "80%"
+        
     },
     subContainer : {
-        height: "100%",
+        height: "100%"
     },
     subsubContainer : {
         height: "85%",

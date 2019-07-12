@@ -5,7 +5,9 @@ import {
     GET_TEMPLATE_CONTENT_HTML,
     UPDATE_EDITOR_CONTENT,
     CLEAR_EDITOR_AND_PREVIEW,
-    UPDATE_PREVIEW_URL
+    GET_PDF,
+    SET_PDF_CONTENT
+
 } from "../actions/templateAction";
 
 const initialState = { 
@@ -14,7 +16,8 @@ const initialState = {
     editorContent : "",
     previewContent : "",
     readOnly: true,
-    previewURL: ""
+    pdfArray : null,
+    pdfContent : null
 }
 
 export default (state = initialState, action) => {
@@ -49,13 +52,21 @@ export default (state = initialState, action) => {
         return {
             ...state,
             editorContent : "",
-            previewURL: "",
+            previewContent: "",
+            pdfArray : null,
+            pdfContent : "",
             readOnly: true
         }
-    case UPDATE_PREVIEW_URL:
+    case GET_PDF:
         return {
-            ...state, 
-            previewURL: "http://localhost:8080/maler/html/" + action.payload
+            ...state,
+            pdfArray: action.payload
+        }
+    case SET_PDF_CONTENT: 
+        return {
+            ...state,
+            pdfContent : action.payload
+
         }
      default:
       return state

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { getTemplateContentInHTML } from '../redux/actions/templateAction'
-import Knapp from 'nav-frontend-knapper'
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
+
 
 class PreviewContainer extends Component {
 
@@ -11,15 +11,24 @@ class PreviewContainer extends Component {
         super();
 
         this.state = {
-            tab : 0
+            tabNames : ["Web", "Nettbrett", "Mobil", "PDF"],
+            chosenTab : 0,
+            stylingClassName : "Web",
+            isPDF : false
         }
     }
 
     handleSelect(event, index) {
         this.setState({
-            tab : index
+            chosenTab : index,
+            stylingClassName : this.state.tabNames[index]
         })
-    }
+        if(this.state.tabNames[index] === "PDF"){
+            this.setState({ isPDF : true })
+            } else {
+                this.setState({ isPDF : false })
+            }
+        }
 
     render(){
         return (
@@ -27,20 +36,20 @@ class PreviewContainer extends Component {
                 <div style={this.props.style.subsubContainer}> 
                     <Tabs 
                         tabs={[
-                            {"label": "Web"},
-                            {"label": "Nettbrett"},
-                            {"label": "Mobil"},
-                            {"label" : "PDF"}
+                            {"label": this.state.tabNames[0]},
+                            {"label": this.state.tabNames[1]},
+                            {"label": this.state.tabNames[2]},
+                            {"label" : this.state.tabNames[3]}
                         ]}
                         onChange={(event, index) => this.handleSelect(event, index)} 
-                        style={{backgroundColor: "#F5F5F5"}}
+                        style={style.tabStyle}
                     />
-                        <Preview/>
+                   <Preview stylingClassName={this.state.stylingClassName} isPDF={this.state.isPDF} />
                 </div>
-                <div style={style.buttonContainer}>
-                    <Knapp style={style.buttons} type="standard" onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
-                    <Knapp style={style.buttons} type="standard">Last ned</Knapp>
-                </div>
+                {/*<div style={style.buttonContainer}>
+                    <Knapp style={style.buttons} type="standard" mini onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
+                    <Knapp style={style.buttons} type="standard" mini>Last ned</Knapp>
+                </div>*/}
             </div>
         )
     }
@@ -58,12 +67,17 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps) (PreviewContainer)
 
 const style = {
-    buttonContainer : {
+    /*buttonContainer : {
         display: "flex",
-        justifyContent : "center"
+        justifyContent : "center",
+        padding: "2%"
     },
     buttons : {
-        width: "30%",
-        margin: "1%"
-    },
-};
+        width: "20%",
+        margin: "3%"
+    },*/
+    tabStyle : {
+        color: "white !important",
+        backgroundColor: "#FFFFFF"
+    }
+}; 

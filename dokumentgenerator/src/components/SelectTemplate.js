@@ -21,10 +21,11 @@ class SelectTemplate extends Component {
         listItems = templateList.map((w) =>
             <option className="listItem" key={w}> {w} </option>);
         return (
-            <div style={style.selectContainer}>
+            <div>
                 <Select label='Hvilken mal vil du redigere?'
                         bredde="xl"
-                        onChange={(e) => this.handleChange(e)}>
+                        onChange={(e) => this.handleChange(e)}
+                        >
                     <option key="" value="">Velg en mal</option>
                     {listItems}
                 </Select>
@@ -45,7 +46,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectTemplate);
-
-const style = {
-    selectContainer: {}
-};

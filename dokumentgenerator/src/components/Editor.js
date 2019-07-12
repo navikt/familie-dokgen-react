@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
-import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
+import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent, getPDF} from "../redux/actions/templateAction";
 
 
 class Editor extends Component {
@@ -18,15 +18,15 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        updateTemplateContent(this.props.selectedTemplate, newValue) /*.then(res => {
-            console.log("res", res);
+        updateTemplateContent(this.props.selectedTemplate, newValue).then(res => {
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
-        }); */
+            this.props.getPDF(this.props.selectedTemplate)
+        });
     };
 
     render(){
         return (
-            <div style={{height:"100%", overflow:"hidden"}}>
+            <div style={style.editorContainer}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"
@@ -52,14 +52,20 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
-    updateEditorContent: (content) => dispatch(updateEditorContent(content))
-});
+    updateEditorContent: (content) => dispatch(updateEditorContent(content)),
+    getPDF : (name) => dispatch(getPDF(name))
+}); 
 
 export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
+    editorContainer : {
+        height: "100%",
+        border: "1px solid #E9E7E7", 
+        borderTop: "none"
+    },
     aceEdit : {
         width:"100%",
-        height: "95%"
+        height: "100%"
     }
 };
