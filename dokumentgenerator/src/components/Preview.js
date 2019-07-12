@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {getTemplateContentInHTML} from "../redux/actions/templateAction";
+import { Document, pdfjs, Page } from 'react-pdf'
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 
 
 class Preview extends Component {
@@ -11,6 +14,7 @@ class Preview extends Component {
         }
     }
 
+
     updateStyle(){
         if(this.props.stylingClassName === "Web"){
             return style.Web;
@@ -19,18 +23,18 @@ class Preview extends Component {
         } else if (this.props.stylingClassName === "Mobil"){
             return style.Mobil;
         } else if (this.props.stylingClassName === "PDF") {
-            return style.PDF;
+            return style.hidePDF;
         } else {
             return style.defaultScreen;
         }
     }
 
-    render(){
-        console.log("props i preview: " + this.props.stylingClassName)
 
+    render(){
         return (
             <div style={style.previewContainer}>
-                <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>
+                {!this.props.isPDF && <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>}
+                {this.props.isPDF && <div style={style.PDF}><Document file={this.props.pdfContent}> <Page scale={1} pageNumber={1}/></Document></div>}
             </div>
         )
     }
@@ -39,7 +43,8 @@ class Preview extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
-    previewContent : state.templateReducer.previewContent
+    previewContent : state.templateReducer.previewContent,
+    pdfContent : state.templateReducer.pdfContent
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -54,9 +59,10 @@ const style = {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        border: "1px solid #F5F5F5", 
+        border: "1px solid #E9E7E7", 
         borderTop: "none",
-        backgroundColor: "#F5F5F5"
+        backgroundColor: "#F5F5F5",
+        overflow: "hidden"
     },
     defaultScreen : {
         backgroundColor : "yellow"
@@ -72,17 +78,18 @@ const style = {
         height: "640px",
         border: "1px solid black",
         backgroundColor : "#FFFFFF"
-        }, 
+        },
     Mobil : {
         width: "240px",
         height: "426px",
         border: "1px solid black",
         backgroundColor : "#FFFFFF"
     },
+    hidePDF : {
+        display: "none"
+    },
     PDF : { 
-        width: "500px",
-        height: "660px",
-        border: "1px solid black",
-        backgroundColor : "#FFFFFF"
+        height: "90%",
+        overflow: "scroll",
     }
 }

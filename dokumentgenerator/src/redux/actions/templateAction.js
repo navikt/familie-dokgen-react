@@ -6,6 +6,8 @@ export const GET_TEMPLATE_CONTENT_MARKDOWN = 'GET_TEMPLATE_CONTENT_MARKDOWN';
 export const GET_TEMPLATE_CONTENT_HTML = 'GET_TEMPLATE_CONTENT_HTML';
 export const UPDATE_EDITOR_CONTENT = 'UPDATE_EDITOR_CONTENT';
 export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
+export const GET_PDF = 'GET_PDF';
+export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
 
 export const selectedTemplate = (selected) => dispatch => {
     dispatch({
@@ -17,6 +19,7 @@ export const selectedTemplate = (selected) => dispatch => {
     } else { 
         dispatch(getTemplateContentInMarkdown(selected));
         dispatch(getTemplateContentInHTML(selected));
+        dispatch(getPDF(selected))
     }
 };
 
@@ -66,5 +69,22 @@ export const updateEditorContent = (content) => dispatch => {
 export const clearEditorAndPreview = () => dispatch => {
     dispatch({
         type: CLEAR_EDITOR_AND_PREVIEW
+    })
+}
+
+export const getPDF = (name) => dispatch => {
+    return axios.get('maler/pdf/' + name, {
+        responseType: 'blob',
+        transformResponse: [function (data) {
+            let blob = new window.Blob([data], { type: 'application/pdf' })
+            dispatch(setPDFContent(window.URL.createObjectURL(blob))); 
+        }]
+    })
+    }
+
+export const setPDFContent = (content) => dispatch => {
+    dispatch({
+        type: SET_PDF_CONTENT,
+        payload: content
     })
 }
