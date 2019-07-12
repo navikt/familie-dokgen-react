@@ -9,6 +9,7 @@ export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
 export const GET_PDF = 'GET_PDF';
 export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
 
+
 export const selectedTemplate = (selected) => dispatch => {
     dispatch({
         type: SELECTED_TEMPLATE,
@@ -20,6 +21,7 @@ export const selectedTemplate = (selected) => dispatch => {
         dispatch(getTemplateContentInMarkdown(selected));
         dispatch(getTemplateContentInHTML(selected));
         dispatch(getPDF(selected))
+
     }
 };
 
@@ -88,3 +90,4 @@ export const setPDFContent = (content) => dispatch => {
         payload: content
     })
 }
+

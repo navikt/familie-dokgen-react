@@ -8,6 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 class Preview extends Component {
 
+
     componentDidUpdate(prevProps, prevState, snapshot){
         if(prevProps.selectedTemplate !== this.props.selectedTemplate){
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
@@ -45,7 +46,6 @@ const mapStateToProps = state => ({
     selectedTemplate : state.templateReducer.selectedTemplate,
     previewContent : state.templateReducer.previewContent,
     pdfContent : state.templateReducer.pdfContent
-});
 
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))

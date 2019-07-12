@@ -7,6 +7,7 @@ import {
     CLEAR_EDITOR_AND_PREVIEW,
     GET_PDF,
     SET_PDF_CONTENT
+
 } from "../actions/templateAction";
 
 const initialState = { 
@@ -65,6 +66,7 @@ export default (state = initialState, action) => {
         return {
             ...state,
             pdfContent : action.payload
+
         }
      default:
       return state
