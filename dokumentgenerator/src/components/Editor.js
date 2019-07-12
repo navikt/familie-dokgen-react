@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
-import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
+import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent, getPDF} from "../redux/actions/templateAction";
 
 
 class Editor extends Component {
@@ -18,15 +18,12 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        this.props.updateTemplateContent(this.props.selectedTemplate, newValue) /*.then(res => {
-            console.log("res", res);
-            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
-        }); */
+        this.props.updateTemplateContent(this.props.selectedTemplate, {}, newValue, "html");
     };
 
     render(){
         return (
-            <div style={{height:"100%", overflow:"hidden"}}>
+            <div style={style.editorContainer}>
                 <AceEditor 
                     mode="markdown"
                     theme="textmate"
@@ -53,14 +50,20 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
     updateEditorContent: (content) => dispatch(updateEditorContent(content)),
-    updateTemplateContent: (name, content) => dispatch(updateTemplateContent(name, content))
+    updateTemplateContent: (name, interleavingFields, markdownContent, format) => dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),
+    getPDF : (name) => dispatch(getPDF(name))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
+    editorContainer : {
+        height: "100%",
+        border: "1px solid #E9E7E7", 
+        borderTop: "none"
+    },
     aceEdit : {
         width:"100%",
-        height: "95%"
+        height: "100%"
     }
 };

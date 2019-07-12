@@ -1,6 +1,6 @@
 import axios from 'axios';
+import {letterGenJson} from "../../API/requestDataFormats";
 import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, PUT_TEMPLATE} from "../../API/url";
-import {json} from "./json";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const GET_TEMPLATE_NAMES = 'GET_TEMPLATE_NAMES';
@@ -8,7 +8,9 @@ export const GET_TEMPLATE_CONTENT_MARKDOWN = 'GET_TEMPLATE_CONTENT_MARKDOWN';
 export const GET_TEMPLATE_CONTENT_HTML = 'GET_TEMPLATE_CONTENT_HTML';
 export const UPDATE_EDITOR_CONTENT = 'UPDATE_EDITOR_CONTENT';
 export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
-export const UPDATE_PREVIEW_URL = 'UPDATE_PREVIEW_URL';
+export const GET_PDF = 'GET_PDF';
+export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
+
 
 export const selectedTemplate = (selected) => dispatch => {
     dispatch({
@@ -19,7 +21,8 @@ export const selectedTemplate = (selected) => dispatch => {
         dispatch(clearEditorAndPreview());
     } else { 
         dispatch(getTemplateContentInMarkdown(selected));
-        dispatch(updatePreviewURL(selected));
+        dispatch(getTemplateContentInHTML(selected));
+        dispatch(getPDF(selected))
     }
 };
 
@@ -60,23 +63,27 @@ export const getTemplateContentInHTML = (name) => dispatch => {
         });
 };
 
-export const updateTemplateContent = (name, content) => dispatch => {
+export const updateTemplateContent = (name, interleavingFields, markdownContent, format) => dispatch => {
     return axios.put(
         PUT_TEMPLATE,
-        {
-            "templateName": name,
-            "interleavingFields": {},
-            "markdownContent": content,
-            "format": "html"
-        },
+        letterGenJson(name, interleavingFields, markdownContent, format),
         {
             headers: {'Content-Type': 'application/json'}
         })
         .then(res => {
-            dispatch({
-                type: GET_TEMPLATE_CONTENT_HTML,
-                payload: res.data
-            })
+            if(res.headers['content-type'] === 'application/pdf'){
+                let blob = new window.Blob([data], { type: 'application/pdf' });
+                dispatch({
+                    type: SET_PDF_CONTENT,
+                    payload: window.URL.createObjectURL(blob)
+                })
+            }
+            else if(res.headers['content-type'] === 'text/plain'){
+                dispatch({
+                    type: GET_TEMPLATE_CONTENT_HTML,
+                    payload: res.data
+                })
+            }
         });
 };
 
@@ -94,9 +101,19 @@ export const clearEditorAndPreview = () => dispatch => {
     })
 };
 
-export const updatePreviewURL = (name) => dispatch => {
+export const getPDF = (name) => dispatch => {
+    return axios.get('maler/pdf/' + name, {
+        responseType: 'blob',
+        transformResponse: [function (data) {
+            let blob = new window.Blob([data], { type: 'application/pdf' });
+            dispatch(setPDFContent(window.URL.createObjectURL(blob))); 
+        }]
+    })
+};
+
+export const setPDFContent = (content) => dispatch => {
     dispatch({
-        type: UPDATE_PREVIEW_URL,
-        payload: name
+        type: SET_PDF_CONTENT,
+        payload: content
     })
 };
