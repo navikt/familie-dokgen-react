@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, PUT_TEMPLATE} from "../../API/url";
+import {json} from "./json";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const GET_TEMPLATE_NAMES = 'GET_TEMPLATE_NAMES';
@@ -22,7 +24,7 @@ export const selectedTemplate = (selected) => dispatch => {
 };
 
 export const getTemplateNames = () => dispatch => {
-    axios.get("maler").then(res =>
+    axios.get(GET_ALL_TEMPLATE_NAMES).then(res =>
         dispatch({
             type: GET_TEMPLATE_NAMES,
             payload: res.data
@@ -31,7 +33,7 @@ export const getTemplateNames = () => dispatch => {
 };
 
 export const getTemplateContentInMarkdown = (name) => dispatch => {
-    axios.get("maler/markdown/" + name).then(res =>
+    axios.get(`${GET_TEMPLATE}/?templateName=${name}`).then(res =>
         dispatch({
             type: GET_TEMPLATE_CONTENT_MARKDOWN,
             payload: res.data
@@ -40,20 +42,42 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 };
 
 export const getTemplateContentInHTML = (name) => dispatch => {
-    console.log("Henter HTML versjonen");
-    axios.get("maler/html/" + name).then(res =>
-        dispatch({
-            type: GET_TEMPLATE_CONTENT_HTML,
-            payload: res.data
+    axios.post(
+        POST_LETTER,
+        {
+            "templateName": name,
+            "interleavingFields": {},
+            "format": "html"
+        },
+        {
+            headers: {'Content-Type': 'application/json'}
         })
-    );
-
+        .then(res => {
+            dispatch({
+                type: GET_TEMPLATE_CONTENT_HTML,
+                payload: res.data
+            })
+        });
 };
 
-export const updateTemplateContent = (name, content) => {
-    return axios.post("maler/" + name, content, {
-        headers: {'Content-Type': 'text/plain'}
-    });
+export const updateTemplateContent = (name, content) => dispatch => {
+    return axios.put(
+        PUT_TEMPLATE,
+        {
+            "templateName": name,
+            "interleavingFields": {},
+            "markdownContent": content,
+            "format": "html"
+        },
+        {
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(res => {
+            dispatch({
+                type: GET_TEMPLATE_CONTENT_HTML,
+                payload: res.data
+            })
+        });
 };
 
 export const updateEditorContent = (content) => dispatch => {
@@ -62,17 +86,17 @@ export const updateEditorContent = (content) => dispatch => {
         payload: content
     });
 
-}
+};
 
 export const clearEditorAndPreview = () => dispatch => {
     dispatch({
         type: CLEAR_EDITOR_AND_PREVIEW
     })
-}
+};
 
 export const updatePreviewURL = (name) => dispatch => {
     dispatch({
         type: UPDATE_PREVIEW_URL,
         payload: name
     })
-}
+};

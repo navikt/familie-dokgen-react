@@ -18,7 +18,7 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        updateTemplateContent(this.props.selectedTemplate, newValue) /*.then(res => {
+        this.props.updateTemplateContent(this.props.selectedTemplate, newValue) /*.then(res => {
             console.log("res", res);
             this.props.getTemplateContentInHTML(this.props.selectedTemplate);
         }); */
@@ -52,7 +52,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
-    updateEditorContent: (content) => dispatch(updateEditorContent(content))
+    updateEditorContent: (content) => dispatch(updateEditorContent(content)),
+    updateTemplateContent: (name, content) => dispatch(updateTemplateContent(name, content))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (Editor)
