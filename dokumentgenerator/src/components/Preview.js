@@ -11,7 +11,7 @@ class Preview extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot){
         if(prevProps.selectedTemplate !== this.props.selectedTemplate){
-            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate, {"amountMonthly": 3.50});
         }
     }
 
@@ -43,12 +43,14 @@ class Preview extends Component {
 
 const mapStateToProps = state => ({
     ...state,
-    selectedTemplate : state.templateReducer.selectedTemplate,
-    previewContent : state.templateReducer.previewContent,
-    pdfContent : state.templateReducer.pdfContent
+    selectedTemplate: state.templateReducer.selectedTemplate,
+    previewContent: state.templateReducer.previewContent,
+    pdfContent: state.templateReducer.pdfContent
+});
 
 const mapDispatchToProps = dispatch => ({
-    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
+    getTemplateContentInHTML: (name, interleavingFields, markdownContent, format) =>
+        dispatch(getTemplateContentInHTML(name, interleavingFields, markdownContent, format))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (Preview)

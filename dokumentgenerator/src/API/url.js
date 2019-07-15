@@ -1,4 +1,4 @@
-export const BASE = 'http://localhost:8080';
+export const BASE = '';//'http://localhost:8080';
 
 //// Templates ////
 export const GET_TEMPLATE = `${BASE}/template/`;

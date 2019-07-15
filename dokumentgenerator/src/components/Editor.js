@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
-import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent, getPDF} from "../redux/actions/templateAction";
+import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
 
 
 class Editor extends Component {
@@ -18,7 +18,7 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        this.props.updateTemplateContent(this.props.selectedTemplate, {}, newValue, "html");
+        this.props.updateTemplateContent(this.props.selectedTemplate, {"amountMonthly":3.5}, newValue, "html");
     };
 
     render(){
@@ -51,7 +51,6 @@ const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
     updateEditorContent: (content) => dispatch(updateEditorContent(content)),
     updateTemplateContent: (name, interleavingFields, markdownContent, format) => dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),
-    getPDF : (name) => dispatch(getPDF(name))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (Editor)
