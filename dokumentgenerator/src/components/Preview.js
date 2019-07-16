@@ -46,6 +46,7 @@ const mapStateToProps = state => ({
     selectedTemplate : state.templateReducer.selectedTemplate,
     previewContent : state.templateReducer.previewContent,
     pdfContent : state.templateReducer.pdfContent
+});
 
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
