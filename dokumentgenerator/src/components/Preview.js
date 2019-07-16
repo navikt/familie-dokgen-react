@@ -76,13 +76,13 @@ const style = {
     Nettbrett : {
         width: "480px",
         height: "640px",
-        border: "1px solid black",
+        border: "1px solid #C6C2BF",
         backgroundColor : "#FFFFFF"
         },
     Mobil : {
         width: "240px",
         height: "426px",
-        border: "1px solid black",
+        border: "1px solid #C6C2BF",
         backgroundColor : "#FFFFFF"
     },
     hidePDF : {

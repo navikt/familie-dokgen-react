@@ -8,9 +8,11 @@ class Header extends Component {
     render(){
         return (
             <div>
-                <Panel style={style.headerContainer}>
-                    <img src={logo} alt="logo"/>
-                    <Systemtittel style={style.title}>Dokumentgenerator</Systemtittel>
+                <Panel style={style.headerPanel}>
+                    <div style={style.headerFlex}>
+                        <img src={logo} alt="logo"/>
+                        <Systemtittel style={style.title}>Dokumentgenerator</Systemtittel>
+                    </div>
                 </Panel>
             </div>
         )
@@ -20,12 +22,15 @@ class Header extends Component {
 export default Header;
 
 const style = {
-    headerContainer : {
-        display: "flex", 
-        alignItems: "center",
+    headerPanel : {
         borderBottom : "4px solid #E9E7E7",
-        margin: "8px"
+        marginBottom: "8px",
+        width: "100%",
     }, 
+    headerFlex : {
+        display: "flex", 
+        alignItems: "center"
+    },
     title : {
         padding: "16px"
     }
