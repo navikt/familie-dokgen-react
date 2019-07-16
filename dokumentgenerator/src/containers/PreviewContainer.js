@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getTemplateContentInHTML } from '../redux/actions/templateAction'
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
+import Colors from '../assets/Colors'
 
 
 class PreviewContainer extends Component {
@@ -32,24 +33,21 @@ class PreviewContainer extends Component {
 
     render(){
         return (
-            <div style={this.props.style.subContainer}>
-                <div style={this.props.style.subsubContainer}> 
-                    <Tabs 
-                        tabs={[
-                            {"label": this.state.tabNames[0]},
-                            {"label": this.state.tabNames[1]},
-                            {"label": this.state.tabNames[2]},
-                            {"label" : this.state.tabNames[3]}
-                        ]}
-                        onChange={(event, index) => this.handleSelect(event, index)} 
-                        style={{border: "1px solid #C6C2BF"}}
-                    />
-                   <Preview stylingClassName={this.state.stylingClassName} isPDF={this.state.isPDF} />
-                </div>
-                {/*<div style={style.buttonContainer}>
-                    <Knapp style={style.buttons} type="standard" mini onClick={() => this.props.getTemplateContentInHTML(this.props.selectedTemplate)}>Kompiler</Knapp>
-                    <Knapp style={style.buttons} type="standard" mini>Last ned</Knapp>
-                </div>*/}
+            <div style={this.props.style}> 
+                <Tabs 
+                    tabs={[
+                        {"label": this.state.tabNames[0]},
+                        {"label": this.state.tabNames[1]},
+                        {"label": this.state.tabNames[2]},
+                        {"label" : this.state.tabNames[3]}
+                    ]}
+                    onChange={(event, index) => this.handleSelect(event, index)} 
+                    style={{border: "1px solid" + Colors.baseColors.navGra20}}
+                />
+                <Preview 
+                    stylingClassName={this.state.stylingClassName} 
+                    isPDF={this.state.isPDF} 
+                />
             </div>
         )
     }
@@ -65,15 +63,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (PreviewContainer)
-
-const style = {
-    /*buttonContainer : {
-        display: "flex",
-        justifyContent : "center",
-        padding: "2%"
-    },
-    buttons : {
-        width: "20%",
-        margin: "3%"
-    },*/
-}; 
