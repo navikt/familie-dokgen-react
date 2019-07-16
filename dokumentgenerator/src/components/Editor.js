@@ -60,9 +60,10 @@ export default connect(mapStateToProps, mapDispatchToProps) (Editor)
 
 const style = {
     editorContainer : {
-        height: "100%",
-        border: "1px solid #E9E7E7", 
-        borderTop: "none"
+        height: "100%", 
+        borderTop: "none",
+        border: "1px solid #C6C2BF",
+        padding: "1px"
     },
     aceEdit : {
         width:"100%",

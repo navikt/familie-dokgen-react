@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EditContainer from './EditContainer';
 import PreviewContainer from './PreviewContainer';
 import SelectTemplate from '../components/SelectTemplate';
+import Header from '../components/Header';
 
 
 export default class DisplayContainer extends Component {
@@ -9,14 +10,13 @@ export default class DisplayContainer extends Component {
     render(){
         return (
             <div style={style.displayContainer}>
+                <Header/>
                 <SelectTemplate/>
                 <div style={style.displayFlex}>
                     <div style={style.borderView}>
-                        <h2>Redigering</h2>
                         <EditContainer style={style}/>
                     </div>
                     <div style={style.borderView}>
-                        <h2>Forhåndsvisning</h2>
                         <PreviewContainer style={style}/>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ const style = {
         
     },
     subContainer : {
-        height: "100%"
+        height: "100%",
     },
     subsubContainer : {
         height: "85%",

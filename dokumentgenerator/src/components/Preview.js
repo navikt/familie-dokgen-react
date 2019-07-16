@@ -59,7 +59,7 @@ const style = {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        border: "1px solid #E9E7E7", 
+        border: "1px solid #C6C2BF", 
         borderTop: "none",
         backgroundColor: "#F5F5F5",
         overflow: "hidden"
