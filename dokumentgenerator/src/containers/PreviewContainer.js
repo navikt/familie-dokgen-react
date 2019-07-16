@@ -42,7 +42,7 @@ class PreviewContainer extends Component {
                             {"label" : this.state.tabNames[3]}
                         ]}
                         onChange={(event, index) => this.handleSelect(event, index)} 
-                        style={style.tabStyle}
+                        style={{border: "1px solid #C6C2BF"}}
                     />
                    <Preview stylingClassName={this.state.stylingClassName} isPDF={this.state.isPDF} />
                 </div>
@@ -76,8 +76,4 @@ const style = {
         width: "20%",
         margin: "3%"
     },*/
-    tabStyle : {
-        color: "white !important",
-        backgroundColor: "#FFFFFF"
-    }
 }; 
