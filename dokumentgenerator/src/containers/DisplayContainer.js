@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditContainer from './EditContainer';
+import EditorContainer from './EditorContainer';
 import PreviewContainer from './PreviewContainer';
 import SelectTemplate from '../components/SelectTemplate';
 import Header from '../components/Header';
@@ -12,17 +12,13 @@ export default class DisplayContainer extends Component {
         return (
             <div style={style.displayContainer}>
                 <Header/>
-                <div style={style.selectContainer}>
+                <div style={style.selectFlexContainer}>
                     <SelectTemplate/>
                     <SelectTestSet style={style.selectFlexItems}/>
                 </div>
-                <div style={style.displayFlex}>
-                    <div style={style.container}>
-                        <EditContainer style={style}/>
-                    </div>
-                    <div style={style.container}>
-                        <PreviewContainer style={style}/>
-                    </div>
+                <div style={style.editorFlexContainer}>
+                    <EditorContainer style={style.subContainer}/>
+                    <PreviewContainer style={style.subContainer}/>
                 </div>
             </div>
         )
@@ -33,7 +29,7 @@ const style = {
     displayContainer : {
         height : "100%"
     },
-    selectContainer : {
+    selectFlexContainer : {
         display: "flex",
         marginTop: "2rem",
         marginLeft: "2%"
@@ -41,7 +37,7 @@ const style = {
     selectFlexItems : {
         paddingLeft: "30px",
     },
-    displayFlex : {
+    editorFlexContainer : {
         height : "100%",
         display : "flex",
         justifyContent : "space-evenly",
@@ -49,18 +45,10 @@ const style = {
         marginLeft: "1%",
         marginRight: "1%"
     }, 
-    container : { 
-        width : "60%",
-        height : "80%"
-        
-    },
     subContainer : {
-        height: "100%",
-    },
-    subsubContainer : {
-        height: "85%",
-        width: "95%",
-        marginLeft: "2%",
-        marginRight: "2%"
+        height: "70%",
+        width: "100%",
+        margin: "1%",
+        marginTop: 0
     }
 }
