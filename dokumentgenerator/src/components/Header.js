@@ -28,6 +28,7 @@ const style = {
         width: "100%",
     }, 
     headerFlex : {
+        marginLeft: "16px",
         display: "flex", 
         alignItems: "center"
     },

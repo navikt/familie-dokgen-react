@@ -42,13 +42,14 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 };
 
 export const getTemplateContentInHTML = (name) => dispatch => {
-    console.log("Henter HTML versjonen");
-    axios.get("maler/html/" + name).then(res =>
-        dispatch({
-            type: GET_TEMPLATE_CONTENT_HTML,
-            payload: res.data
-        })
-    );
+    if(name !== ""){
+        axios.get("maler/html/" + name).then(res =>
+            dispatch({
+                type: GET_TEMPLATE_CONTENT_HTML,
+                payload: res.data
+            })
+        );
+    }
 
 };
 
