@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.png'
+import Colors from '../assets/Colors'
 import { Systemtittel } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
@@ -23,7 +24,7 @@ export default Header;
 
 const style = {
     headerPanel : {
-        borderBottom : "4px solid #E9E7E7",
+        borderBottom : "4px solid" + Colors.baseColors.navLysGra,
         marginBottom: "8px",
         width: "100%",
     }, 

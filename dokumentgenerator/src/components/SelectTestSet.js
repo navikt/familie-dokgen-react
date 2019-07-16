@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Select} from 'nav-frontend-skjema';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Select } from 'nav-frontend-skjema';
+import { connect } from 'react-redux';
 
 class SelectTestSet extends Component {
 
@@ -10,10 +10,10 @@ class SelectTestSet extends Component {
     }
 
     render() {
-
         //const templateList = this.props.templates;
         //listItems = templateList.map((w) =>
           //  <option className="listItem" key={w}> {w} </option>);
+
         return (
             <div style={this.props.style}>
                 {this.props.templateIsSelected && <Select label='Hvilken testsett vil du se?'
