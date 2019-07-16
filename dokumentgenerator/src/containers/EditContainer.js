@@ -25,8 +25,7 @@ export default class EditContainer extends Component {
                 <div style={this.props.style.subsubContainer}> 
                 <Tabs 
                         tabs={[
-                            {"label": "Markdown"},
-                            //{"label": "Rich text"},
+                            {"label": "Markdown"}
                         ]}
                         onChange={ (event, index) => {this.handleSelect(event, index)}} 
                         style={{border: "1px solid #C6C2BF"}}

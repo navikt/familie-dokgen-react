@@ -21,7 +21,7 @@ class SelectTemplate extends Component {
         listItems = templateList.map((w) =>
             <option className="listItem" key={w}> {w} </option>);
         return (
-            <div>
+            <div style={this.props.style}>
                 <Select label='Hvilken mal vil du redigere?'
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}

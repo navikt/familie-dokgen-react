@@ -3,6 +3,7 @@ import EditContainer from './EditContainer';
 import PreviewContainer from './PreviewContainer';
 import SelectTemplate from '../components/SelectTemplate';
 import Header from '../components/Header';
+import SelectTestSet from '../components/SelectTestSet';
 
 
 export default class DisplayContainer extends Component {
@@ -13,6 +14,7 @@ export default class DisplayContainer extends Component {
                 <Header/>
                 <div style={style.selectContainer}>
                     <SelectTemplate/>
+                    <SelectTestSet style={style.selectFlexItems}/>
                 </div>
                 <div style={style.displayFlex}>
                     <div style={style.container}>
@@ -35,6 +37,9 @@ const style = {
         display: "flex",
         marginTop: "2rem",
         marginLeft: "2%"
+    },
+    selectFlexItems : {
+        paddingLeft: "30px",
     },
     displayFlex : {
         height : "100%",
