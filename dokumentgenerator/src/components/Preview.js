@@ -46,6 +46,7 @@ const mapStateToProps = state => ({
     selectedTemplate : state.templateReducer.selectedTemplate,
     previewContent : state.templateReducer.previewContent,
     pdfContent : state.templateReducer.pdfContent
+});
 
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
@@ -59,7 +60,7 @@ const style = {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        border: "1px solid #E9E7E7", 
+        border: "1px solid #C6C2BF", 
         borderTop: "none",
         backgroundColor: "#F5F5F5",
         overflow: "hidden"
@@ -76,13 +77,13 @@ const style = {
     Nettbrett : {
         width: "480px",
         height: "640px",
-        border: "1px solid black",
+        border: "1px solid #C6C2BF",
         backgroundColor : "#FFFFFF"
         },
     Mobil : {
         width: "240px",
         height: "426px",
-        border: "1px solid black",
+        border: "1px solid #C6C2BF",
         backgroundColor : "#FFFFFF"
     },
     hidePDF : {
