@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Select} from 'nav-frontend-skjema';
-import {connect} from 'react-redux';
-import {selectedTemplate, getTemplateNames} from '../redux/actions/templateAction';
+import React, { Component } from 'react';
+import { Select } from 'nav-frontend-skjema';
+import { connect } from 'react-redux';
+import { selectedTemplate, getTemplateNames } from '../redux/actions/templateAction';
 
 class SelectTemplate extends Component {
 
@@ -16,12 +16,12 @@ class SelectTemplate extends Component {
 
     render() {
         let listItems;
-
         const templateList = this.props.templates;
         listItems = templateList.map((w) =>
             <option className="listItem" key={w}> {w} </option>);
+            
         return (
-            <div>
+            <div style={this.props.style}>
                 <Select label='Hvilken mal vil du redigere?'
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}

@@ -44,17 +44,19 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 };
 
 export const getTemplateContentInHTML = (name, interleavingFields, markdownContent="", format="html") => dispatch => {
-    axios.post(
-        POST_LETTER,
-        requestDataFormats.letterGenJsonParams(name, interleavingFields, markdownContent, format),
-        requestDataFormats.letterGenJsonHeaders(format)
-    )
-        .then(res => {
-            dispatch({
-                type: GET_TEMPLATE_CONTENT_HTML,
-                payload: res.data
-            })
-        });
+    if(!name){
+        axios.post(
+            POST_LETTER,
+            requestDataFormats.letterGenJsonParams(name, interleavingFields, markdownContent, format),
+            requestDataFormats.letterGenJsonHeaders(format)
+        )
+            .then(res => {
+                dispatch({
+                    type: GET_TEMPLATE_CONTENT_HTML,
+                    payload: res.data
+                })
+            });
+    }
 };
 
 export const updateTemplateContent = (name, interleavingFields, markdownContent, format="html") => dispatch => {

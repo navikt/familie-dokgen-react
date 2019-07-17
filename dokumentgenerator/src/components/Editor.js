@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Colors from '../assets/Colors';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
@@ -7,14 +8,6 @@ import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} fr
 
 
 class Editor extends Component {
-
-    constructor(props){
-        super(props);
-
-        this.state={
-            selectedTemplate : this.props.selectedTemplate
-        }
-    }
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
@@ -53,13 +46,13 @@ const mapDispatchToProps = dispatch => ({
     updateTemplateContent: (name, interleavingFields, markdownContent, format) => dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) (Editor)
+export default connect(mapStateToProps, mapDispatchToProps)(Editor)
 
 const style = {
     editorContainer : {
-        height: "100%",
-        border: "1px solid #E9E7E7", 
-        borderTop: "none"
+        height: "100%", 
+        borderTop: "none",
+        border: "1px solid" + Colors.baseColors.navGra20
     },
     aceEdit : {
         width:"100%",

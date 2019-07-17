@@ -1,41 +1,44 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {getTemplateContentInHTML} from "../redux/actions/templateAction";
+import { getTemplateContentInHTML } from "../redux/actions/templateAction";
+import Colors from '../assets/Colors'
 import { Document, pdfjs, Page } from 'react-pdf'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 
 
 class Preview extends Component {
-
-
+    
     componentDidUpdate(prevProps, prevState, snapshot){
         if(prevProps.selectedTemplate !== this.props.selectedTemplate){
             this.props.getTemplateContentInHTML(this.props.selectedTemplate, {"amountMonthly": 3.50});
         }
     }
 
-
+    //Styles the iframe considering the tab-choice in PreviewContainer
     updateStyle(){
-        if(this.props.stylingClassName === "Web"){
-            return style.Web;
-        } else if( this.props.stylingClassName === "Nettbrett"){
+        if( this.props.stylingClassName === "Nettbrett"){
             return style.Nettbrett;
         } else if (this.props.stylingClassName === "Mobil"){
             return style.Mobil;
         } else if (this.props.stylingClassName === "PDF") {
             return style.hidePDF;
         } else {
-            return style.defaultScreen;
+            return style.Web;
         }
     }
-
 
     render(){
         return (
             <div style={style.previewContainer}>
-                {!this.props.isPDF && <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>}
-                {this.props.isPDF && <div style={style.PDF}><Document file={this.props.pdfContent}> <Page scale={1} pageNumber={1}/></Document></div>}
+                { //Shows the iframe if PDF-tab is not chosen
+                    !this.props.isPDF &&
+                     <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>
+                }
+                {   //Shows the PDF if PDF-tab is chosen
+                    this.props.isPDF &&
+                    <div style={style.PDF}><Document file={this.props.pdfContent}> <Page scale={1} pageNumber={1}/></Document></div>
+                }
             </div>
         )
     }
@@ -45,7 +48,6 @@ const mapStateToProps = state => ({
     ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
     previewContent: state.templateReducer.previewContent,
-    pdfContent: state.templateReducer.pdfContent
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -61,31 +63,29 @@ const style = {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        border: "1px solid #E9E7E7", 
+        overflow: "hidden",
+        border: "1px solid" + Colors.baseColors.navGra20, 
         borderTop: "none",
-        backgroundColor: "#F5F5F5",
-        overflow: "hidden"
+        backgroundColor: Colors.baseColors.previewShadow
     },
-    defaultScreen : {
-        backgroundColor : "yellow"
-    },
+    //Options for iframe- and pdf-display
     Web : {
         width: "100%",
         height: "100%",
         border: "none",
-        backgroundColor : "#FFFFFF"
+        backgroundColor : Colors.baseColors.previewBackground
     },
     Nettbrett : {
         width: "480px",
         height: "640px",
-        border: "1px solid black",
-        backgroundColor : "#FFFFFF"
+        border: "1px solid" + Colors.baseColors.navGra20,
+        backgroundColor : Colors.baseColors.previewBackground
         },
     Mobil : {
         width: "240px",
         height: "426px",
-        border: "1px solid black",
-        backgroundColor : "#FFFFFF"
+        border: "1px solid" + Colors.baseColors.navGra20,
+        backgroundColor : Colors.baseColors.previewBackground
     },
     hidePDF : {
         display: "none"

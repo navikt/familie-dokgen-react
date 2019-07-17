@@ -12,6 +12,7 @@ import {
 
 const initialState = { 
     selectedTemplate : "",
+    templateIsSelected: false,
     templateNames : [],
     editorContent : "",
     previewContent : "",
@@ -36,7 +37,8 @@ export default (state = initialState, action) => {
     case GET_TEMPLATE_CONTENT_MARKDOWN:
       return {
           ...state,
-          editorContent: action.payload
+          editorContent: action.payload,
+          templateIsSelected: true
       };
     case GET_TEMPLATE_CONTENT_HTML:
         return {
@@ -55,7 +57,8 @@ export default (state = initialState, action) => {
             previewContent: "",
             pdfArray : null,
             pdfContent : "",
-            readOnly: true
+            readOnly: true,
+            templateIsSelected : false
         }
     case GET_PDF:
         return {

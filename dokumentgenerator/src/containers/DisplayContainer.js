@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import EditContainer from './EditContainer';
+import EditorContainer from './EditorContainer';
 import PreviewContainer from './PreviewContainer';
 import SelectTemplate from '../components/SelectTemplate';
+import Header from '../components/Header';
+import SelectTestSet from '../components/SelectTestSet';
 
 
 export default class DisplayContainer extends Component {
@@ -9,16 +11,14 @@ export default class DisplayContainer extends Component {
     render(){
         return (
             <div style={style.displayContainer}>
-                <SelectTemplate/>
-                <div style={style.displayFlex}>
-                    <div style={style.borderView}>
-                        <h2>Redigering</h2>
-                        <EditContainer style={style}/>
-                    </div>
-                    <div style={style.borderView}>
-                        <h2>Forhåndsvisning</h2>
-                        <PreviewContainer style={style}/>
-                    </div>
+                <Header/>
+                <div style={style.selectFlexContainer}>
+                    <SelectTemplate/>
+                    <SelectTestSet style={style.selectFlexItems}/>
+                </div>
+                <div style={style.editorFlexContainer}>
+                    <EditorContainer style={style.subContainer}/>
+                    <PreviewContainer style={style.subContainer}/>
                 </div>
             </div>
         )
@@ -27,26 +27,28 @@ export default class DisplayContainer extends Component {
 
 const style = {
     displayContainer : {
-        height : "100%",
-        marginTop: "5px"
+        height : "100%"
     },
-    displayFlex : {
+    selectFlexContainer : {
+        display: "flex",
+        marginTop: "2rem",
+        marginLeft: "2%"
+    },
+    selectFlexItems : {
+        paddingLeft: "30px",
+    },
+    editorFlexContainer : {
         height : "100%",
         display : "flex",
         justifyContent : "space-evenly",
-        margin: "1%",
+        marginTop: "1rem",
+        marginLeft: "1%",
+        marginRight: "1%"
     }, 
-    borderView : { 
-        width : "60%",
-        height : "80%"
-        
-    },
     subContainer : {
-        height: "100%"
-    },
-    subsubContainer : {
-        height: "85%",
-        width: "95%",
-        margin: "2%"
+        height: "70%",
+        width: "100%",
+        margin: "1%",
+        marginTop: 0
     }
 }
