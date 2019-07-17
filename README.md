@@ -14,3 +14,5 @@ Dokumentgenerator laget i JavaScript med React. Dokumentgeneratoren tar inn brev
 2. Naviger inn i dokumentgeneratoren -  ``cd dokumentgenerator ``  
 3. Installer dependencies - ``npm install `` eller ``yarn install`` 
 4. Kjør programmet -  ``npm start `` eller ``yarn start``
+
+Nettleseren vil da åpnes automatisk på [http://localhost:3000](http://localhost:3000).
