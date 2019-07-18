@@ -6,7 +6,7 @@ import {
     UPDATE_EDITOR_CONTENT,
     CLEAR_EDITOR_AND_PREVIEW,
     GET_PDF,
-    SET_PDF_CONTENT
+    SET_PDF_CONTENT, FORMAT_CHANGE
 
 } from "../actions/templateAction";
 
@@ -18,8 +18,9 @@ const initialState = {
     previewContent : "",
     readOnly: true,
     pdfArray : null,
-    pdfContent : null
-}
+    pdfContent : null,
+    previewFormat : "html"
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -29,6 +30,11 @@ export default (state = initialState, action) => {
        selectedTemplate: action.payload,
        readOnly: false
       };
+    case FORMAT_CHANGE:
+        return {
+            ...state,
+            previewFormat: action.payload
+        };
     case GET_TEMPLATE_NAMES:
         return {
             ...state,

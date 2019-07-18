@@ -11,7 +11,7 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        this.props.updateTemplateContent(this.props.selectedTemplate, {"amountMonthly":3.5}, newValue, "html");
+        this.props.updateTemplateContent(this.props.selectedTemplate, {"belop":3.5}, newValue, this.props.previewFormat);
     };
 
     render(){
@@ -36,14 +36,19 @@ const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
     editorContent : state.templateReducer.editorContent,
-    readOnly: state.templateReducer.readOnly
+    readOnly: state.templateReducer.readOnly,
+    previewFormat: state.templateReducer.previewFormat
 });
 
 
 const mapDispatchToProps = dispatch => ({
-    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
     updateEditorContent: (content) => dispatch(updateEditorContent(content)),
-    updateTemplateContent: (name, interleavingFields, markdownContent, format) => dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),
+
+    getTemplateContentInHTML: (name, interleavingFields, markdownContent, format) =>
+        dispatch(getTemplateContentInHTML(name, interleavingFields, markdownContent, format)),
+
+    updateTemplateContent: (name, interleavingFields, markdownContent, format) =>
+        dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

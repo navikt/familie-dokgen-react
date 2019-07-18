@@ -8,10 +8,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 
 class Preview extends Component {
-    
     componentDidUpdate(prevProps, prevState, snapshot){
-        if(prevProps.selectedTemplate !== this.props.selectedTemplate){
-            this.props.getTemplateContentInHTML(this.props.selectedTemplate, {"amountMonthly": 3.50});
+        if((prevProps.selectedTemplate !== this.props.selectedTemplate) || (prevProps.previewFormat !== this.props.previewFormat)){
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate, {"belop": 3.50}, "", this.props.previewFormat);
         }
     }
 
@@ -32,11 +31,11 @@ class Preview extends Component {
         return (
             <div style={style.previewContainer}>
                 { //Shows the iframe if PDF-tab is not chosen
-                    !this.props.isPDF &&
+                    (this.props.previewFormat !== "pdf" && this.props.previewFormat !== "pdfa") &&
                      <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>
                 }
                 {   //Shows the PDF if PDF-tab is chosen
-                    this.props.isPDF &&
+                    (this.props.previewFormat === "pdf" || this.props.previewFormat === "pdfa") &&
                     <div style={style.PDF}><Document file={this.props.pdfContent}> <Page scale={1} pageNumber={1}/></Document></div>
                 }
             </div>
@@ -48,6 +47,8 @@ const mapStateToProps = state => ({
     ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
     previewContent: state.templateReducer.previewContent,
+    pdfContent: state.templateReducer.pdfContent,
+    previewFormat: state.templateReducer.previewFormat
 });
 
 const mapDispatchToProps = dispatch => ({

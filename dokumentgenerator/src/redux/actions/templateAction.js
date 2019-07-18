@@ -3,6 +3,7 @@ import requestDataFormats from "../../API/requestDataFormats";
 import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, PUT_TEMPLATE} from "../../API/url";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
+export const FORMAT_CHANGE = 'FORMAT_CHANGE';
 export const GET_TEMPLATE_NAMES = 'GET_TEMPLATE_NAMES';
 export const GET_TEMPLATE_CONTENT_MARKDOWN = 'GET_TEMPLATE_CONTENT_MARKDOWN';
 export const GET_TEMPLATE_CONTENT_HTML = 'GET_TEMPLATE_CONTENT_HTML';
@@ -25,6 +26,13 @@ export const selectedTemplate = (selected) => dispatch => {
     }
 };
 
+export const updatePreviewFormat = (format) => dispatch => {
+    dispatch({
+        type: FORMAT_CHANGE,
+        payload: format
+    })
+};
+
 export const getTemplateNames = () => dispatch => {
     axios.get(GET_ALL_TEMPLATE_NAMES).then(res =>
         dispatch({
@@ -44,19 +52,25 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 };
 
 export const getTemplateContentInHTML = (name, interleavingFields, markdownContent="", format="html") => dispatch => {
-    if(!name){
-        axios.post(
-            POST_LETTER,
-            requestDataFormats.letterGenJsonParams(name, interleavingFields, markdownContent, format),
-            requestDataFormats.letterGenJsonHeaders(format)
-        )
-            .then(res => {
+    return axios.post(
+        POST_LETTER,
+        requestDataFormats.letterGenJsonParams(name, interleavingFields, markdownContent, format),
+        requestDataFormats.letterGenJsonHeaders(format)
+    )
+        .then(res => {
+            if(res.headers['content-type'] === 'application/pdf'){
+                dispatch({
+                    type: SET_PDF_CONTENT,
+                    payload: window.URL.createObjectURL(res.data)
+                })
+            }
+            else if(res.headers['content-type'] === 'text/html'){
                 dispatch({
                     type: GET_TEMPLATE_CONTENT_HTML,
                     payload: res.data
                 })
-            });
-    }
+            }
+        });
 };
 
 export const updateTemplateContent = (name, interleavingFields, markdownContent, format="html") => dispatch => {
@@ -72,7 +86,7 @@ export const updateTemplateContent = (name, interleavingFields, markdownContent,
                     payload: window.URL.createObjectURL(res.data)
                 })
             }
-            else if(res.headers['content-type'] === 'text/html; charset=utf-8'){
+            else if(res.headers['content-type'] === 'text/html'){
                 dispatch({
                     type: GET_TEMPLATE_CONTENT_HTML,
                     payload: res.data
