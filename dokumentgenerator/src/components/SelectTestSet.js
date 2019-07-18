@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { Select } from 'nav-frontend-skjema';
 import { connect } from 'react-redux';
+import { setSelectedTestData } from '../redux/actions/templateAction';
 
 class SelectTestSet extends Component {
 
     handleChange(event) {
-        //let selected = event.target.value;
-        //this.props.setTemplateType(selected);
+        let selected = event.target.value;
+        this.props.setSelectedTestData(selected);
     }
 
     render() {
-        //const templateList = this.props.templates;
-        //listItems = templateList.map((w) =>
-          //  <option className="listItem" key={w}> {w} </option>);
+        const testSetList = this.props.testDataNames;
+        let listItems = testSetList.map((w) =>
+            <option className="listItem" key={w}> {w} </option>);
 
         return (
             <div style={this.props.style}>
@@ -20,7 +21,7 @@ class SelectTestSet extends Component {
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}
                         >
-                    <option key="" value="">Velg et testsett</option>
+                    {listItems}
                 </Select>}
             </div>
         )
@@ -30,13 +31,13 @@ class SelectTestSet extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
-    templateIsSelected : state.templateReducer.templateIsSelected
-    //templates: state.templateReducer.templateNames
+    templateIsSelected : state.templateReducer.templateIsSelected,
+    testDataNames: state.templateReducer.testDataNames,
+    selectedTestData : state.templateReducer.selectedTestData
 });
 
 const mapDispatchToProps = dispatch => ({
-    //setTemplateType: (selected) => dispatch(selectedTemplate(selected)),
-    //getTemplateNames: () => dispatch(getTemplateNames())
+    setSelectedTestData: (testDataName) => dispatch(setSelectedTestData(testDataName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectTestSet);
