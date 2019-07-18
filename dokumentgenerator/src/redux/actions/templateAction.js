@@ -11,6 +11,8 @@ export const UPDATE_EDITOR_CONTENT = 'UPDATE_EDITOR_CONTENT';
 export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
 export const GET_PDF = 'GET_PDF';
 export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
+export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
+export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 
 
 export const selectedTemplate = (selected) => dispatch => {
@@ -23,6 +25,7 @@ export const selectedTemplate = (selected) => dispatch => {
     } else { 
         dispatch(getTemplateContentInMarkdown(selected));
         dispatch(getTemplateContentInHTML(selected, {}));
+        dispatch(getTestDataNames(selected))
     }
 };
 
@@ -107,4 +110,20 @@ export const clearEditorAndPreview = () => dispatch => {
     dispatch({
         type: CLEAR_EDITOR_AND_PREVIEW
     })
-};
+}
+
+export const getTestDataNames = (name) => dispatch => {
+    axios.get("maler/" + name + "/testdata").then(res =>
+        dispatch({
+            type: GET_TEST_DATA_NAMES,
+            payload: res.data
+        })
+    )
+}
+
+export const setSelectedTestData = (testDataName) => dispatch => {
+    dispatch({
+        type: SET_SELECTED_TEST_DATA,
+        payload: testDataName
+    })
+}
