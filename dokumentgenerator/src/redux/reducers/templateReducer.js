@@ -6,7 +6,9 @@ import {
     UPDATE_EDITOR_CONTENT,
     CLEAR_EDITOR_AND_PREVIEW,
     GET_PDF,
-    SET_PDF_CONTENT
+    SET_PDF_CONTENT,
+    GET_TEST_DATA_NAMES,
+    SET_SELECTED_TEST_DATA
 
 } from "../actions/templateAction";
 
@@ -18,7 +20,9 @@ const initialState = {
     previewContent : "",
     readOnly: true,
     pdfArray : null,
-    pdfContent : null
+    pdfContent : null,
+    testDataNames : [],
+    selectedTestData : ""
 }
 
 export default (state = initialState, action) => {
@@ -70,6 +74,17 @@ export default (state = initialState, action) => {
             ...state,
             pdfContent : action.payload
 
+        }
+    case GET_TEST_DATA_NAMES: 
+    return {
+        ...state,
+        testDataNames : action.payload,
+        selectedTestData : action.payload[0]
+    }
+    case SET_SELECTED_TEST_DATA:
+        return {
+            ...state,
+            selectedTestData : action.payload
         }
      default:
       return state
