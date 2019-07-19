@@ -7,6 +7,7 @@ import {
     CLEAR_EDITOR_AND_PREVIEW,
     GET_PDF,
     SET_PDF_CONTENT,
+    FORMAT_CHANGE,
     GET_TEST_DATA_NAMES,
     SET_SELECTED_TEST_DATA
 
@@ -19,11 +20,11 @@ const initialState = {
     editorContent : "",
     previewContent : "",
     readOnly: true,
-    pdfArray : null,
     pdfContent : null,
+    previewFormat : "html",
     testDataNames : [],
     selectedTestData : ""
-}
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -33,6 +34,11 @@ export default (state = initialState, action) => {
        selectedTemplate: action.payload,
        readOnly: false
       };
+    case FORMAT_CHANGE:
+        return {
+            ...state,
+            previewFormat: action.payload
+        };
     case GET_TEMPLATE_NAMES:
         return {
             ...state,

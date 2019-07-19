@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { getTemplateContentInHTML } from '../redux/actions/templateAction'
+import { getTemplateContentInHTML, updatePreviewFormat } from '../redux/actions/templateAction'
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
 import Colors from '../assets/Colors'
@@ -14,8 +14,7 @@ class PreviewContainer extends Component {
         this.state = {
             tabNames : ["Web", "Nettbrett", "Mobil", "PDF"],
             chosenTab : 0,
-            stylingClassName : "Web",
-            isPDF : false
+            stylingClassName : "Web"
         }
     }
 
@@ -25,9 +24,9 @@ class PreviewContainer extends Component {
             stylingClassName : this.state.tabNames[index]
         })
         if(this.state.tabNames[index] === "PDF"){
-            this.setState({ isPDF : true })
-            } else {
-                this.setState({ isPDF : false })
+            this.props.updatePreviewFormat("pdf")
+        } else {
+            this.props.updatePreviewFormat("html")
             }
         }
 
@@ -46,7 +45,7 @@ class PreviewContainer extends Component {
                 />
                 <Preview 
                     stylingClassName={this.state.stylingClassName} 
-                    isPDF={this.state.isPDF} 
+                    isPDF={this.props.previewFormat}
                 />
             </div>
         )
@@ -55,11 +54,13 @@ class PreviewContainer extends Component {
 
 const mapStateToProps = state => ({
     ...state,
-    selectedTemplate : state.templateReducer.selectedTemplate
+    selectedTemplate : state.templateReducer.selectedTemplate,
+    previewFormat: state.templateReducer.previewFormat
 });
 
 const mapDispatchToProps = dispatch => ({
-    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
+    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
+    updatePreviewFormat: (format) => dispatch(updatePreviewFormat(format))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (PreviewContainer)
