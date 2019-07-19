@@ -4,17 +4,14 @@ import Colors from '../assets/Colors';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
-import { getTemplateContentInHTML, updateEditorContent, updateTemplateContent, getPDF } from "../redux/actions/templateAction";
+import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
 
 
 class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        updateTemplateContent(this.props.selectedTemplate, newValue).then(res => {
-            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
-            this.props.getPDF(this.props.selectedTemplate)
-        });
+        this.props.updateTemplateContent(this.props.selectedTemplate, "01", newValue, this.props.previewFormat);
     };
 
     render(){
@@ -39,15 +36,20 @@ const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
     editorContent : state.templateReducer.editorContent,
-    readOnly: state.templateReducer.readOnly
+    readOnly: state.templateReducer.readOnly,
+    previewFormat: state.templateReducer.previewFormat
 });
 
 
 const mapDispatchToProps = dispatch => ({
-    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
     updateEditorContent: (content) => dispatch(updateEditorContent(content)),
-    getPDF : (name) => dispatch(getPDF(name))
-}); 
+
+    getTemplateContentInHTML: (name, interleavingFields, markdownContent, format) =>
+        dispatch(getTemplateContentInHTML(name, interleavingFields, markdownContent, format)),
+
+    updateTemplateContent: (name, interleavingFields, markdownContent, format) =>
+        dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)
 
