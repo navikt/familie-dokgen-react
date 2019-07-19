@@ -11,7 +11,7 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        this.props.updateTemplateContent(this.props.selectedTemplate, "01", newValue, this.props.previewFormat);
+        this.props.updateTemplateContent(this.props.selectedTemplate, this.props.selectedTestData, newValue, this.props.previewFormat);
     };
 
     render(){
@@ -37,7 +37,8 @@ const mapStateToProps = state => ({
     selectedTemplate : state.templateReducer.selectedTemplate,
     editorContent : state.templateReducer.editorContent,
     readOnly: state.templateReducer.readOnly,
-    previewFormat: state.templateReducer.previewFormat
+    previewFormat: state.templateReducer.previewFormat,
+    selectedTestData: state.templateReducer.selectedTestData
 });
 
 

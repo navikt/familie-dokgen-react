@@ -24,7 +24,6 @@ export const selectedTemplate = (selected) => dispatch => {
         dispatch(clearEditorAndPreview());
     } else { 
         dispatch(getTemplateContentInMarkdown(selected));
-        dispatch(getTemplateContentInHTML(selected, {}));
         dispatch(getTestDataNames(selected))
     }
 };
@@ -113,11 +112,13 @@ export const clearEditorAndPreview = () => dispatch => {
 };
 
 export const getTestDataNames = (name) => dispatch => {
-    axios.get("maler/" + name + "/testdata").then(res =>
+    axios.get("maler/" + name + "/testdata").then(res => {
         dispatch({
             type: GET_TEST_DATA_NAMES,
             payload: res.data
-        })
+        });
+        dispatch(getTemplateContentInHTML(name, res.data[0]))
+    }
     )
 };
 
