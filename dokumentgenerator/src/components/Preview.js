@@ -36,7 +36,15 @@ class Preview extends Component {
                 }
                 {   //Shows the PDF if PDF-tab is chosen
                     (this.props.previewFormat === "pdf" || this.props.previewFormat === "pdfa") &&
-                    <div style={style.PDF}><Document file={this.props.pdfContent}> <Page scale={1} pageNumber={1}/></Document></div>
+                    <div style={style.PDF}>
+                        <Document 
+                            file={this.props.pdfContent}
+                            error={"Kunne ikke laste inn PDF-fil."}
+                            noData={"Ingen PDF-fil valgt."}
+                            loading={"Laster inn PDF."}> 
+                            <Page scale={1} pageNumber={1}/>
+                        </Document>
+                    </div>
                 }
             </div>
         )
@@ -72,8 +80,8 @@ const style = {
     },
     //Options for iframe- and pdf-display
     Web : {
-        width: "100%",
-        height: "100%",
+        width: "95%",
+        height: "80%",
         border: "none",
         backgroundColor : Colors.baseColors.previewBackground
     },
