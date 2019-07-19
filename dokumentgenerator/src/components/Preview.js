@@ -8,10 +8,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 
 class Preview extends Component {
-    
     componentDidUpdate(prevProps, prevState, snapshot){
-        if(prevProps.selectedTemplate !== this.props.selectedTemplate){
-            this.props.getTemplateContentInHTML(this.props.selectedTemplate);
+        if(prevProps.previewFormat !== this.props.previewFormat){
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate, this.props.selectedTestData, "", this.props.previewFormat);
         }
     }
 
@@ -32,12 +31,20 @@ class Preview extends Component {
         return (
             <div style={style.previewContainer}>
                 { //Shows the iframe if PDF-tab is not chosen
-                    !this.props.isPDF &&
+                    (this.props.previewFormat !== "pdf" && this.props.previewFormat !== "pdfa") &&
                      <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>
                 }
                 {   //Shows the PDF if PDF-tab is chosen
-                    this.props.isPDF &&
-                    <div style={style.PDF}><Document file={this.props.pdfContent}> <Page scale={1} pageNumber={1}/></Document></div>
+                    (this.props.previewFormat === "pdf" || this.props.previewFormat === "pdfa") &&
+                    <div style={style.PDF}>
+                        <Document 
+                            file={this.props.pdfContent}
+                            error={"Kunne ikke laste inn PDF-fil."}
+                            noData={"Ingen PDF-fil valgt."}
+                            loading={"Laster inn PDF."}> 
+                            <Page scale={1} pageNumber={1}/>
+                        </Document>
+                    </div>
                 }
             </div>
         )
@@ -46,13 +53,16 @@ class Preview extends Component {
 
 const mapStateToProps = state => ({
     ...state,
-    selectedTemplate : state.templateReducer.selectedTemplate,
-    previewContent : state.templateReducer.previewContent,
-    pdfContent : state.templateReducer.pdfContent
+    selectedTemplate: state.templateReducer.selectedTemplate,
+    previewContent: state.templateReducer.previewContent,
+    pdfContent: state.templateReducer.pdfContent,
+    previewFormat: state.templateReducer.previewFormat,
+    selectedTestData: state.templateReducer.selectedTestData
 });
 
 const mapDispatchToProps = dispatch => ({
-    getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name))
+    getTemplateContentInHTML: (name, interleavingFields, markdownContent, format) =>
+        dispatch(getTemplateContentInHTML(name, interleavingFields, markdownContent, format))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (Preview)
@@ -70,8 +80,8 @@ const style = {
     },
     //Options for iframe- and pdf-display
     Web : {
-        width: "100%",
-        height: "100%",
+        width: "95%",
+        height: "80%",
         border: "none",
         backgroundColor : Colors.baseColors.previewBackground
     },
