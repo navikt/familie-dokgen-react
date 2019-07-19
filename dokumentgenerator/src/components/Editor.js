@@ -11,7 +11,7 @@ class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        this.props.updateTemplateContent(this.props.selectedTemplate, {"belop":3.5}, newValue, this.props.previewFormat);
+        this.props.updateTemplateContent(this.props.selectedTemplate, "01", newValue, this.props.previewFormat);
     };
 
     render(){

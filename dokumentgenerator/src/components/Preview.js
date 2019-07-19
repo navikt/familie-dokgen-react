@@ -10,7 +10,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 class Preview extends Component {
     componentDidUpdate(prevProps, prevState, snapshot){
         if((prevProps.selectedTemplate !== this.props.selectedTemplate) || (prevProps.previewFormat !== this.props.previewFormat)){
-            this.props.getTemplateContentInHTML(this.props.selectedTemplate, {"belop": 3.50}, "", this.props.previewFormat);
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate, "01", "", this.props.previewFormat);
         }
     }
 
