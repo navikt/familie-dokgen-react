@@ -15,16 +15,16 @@ export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 
 
-export const selectedTemplate = (selected) => dispatch => {
+export const selectedTemplate = (selected, format) => dispatch => {
     dispatch({
         type: SELECTED_TEMPLATE,
         payload: selected
     });
     if(selected===""){
         dispatch(clearEditorAndPreview());
-    } else { 
+    } else {
         dispatch(getTemplateContentInMarkdown(selected));
-        dispatch(getTestDataNames(selected))
+        dispatch(getTestDataNames(selected, format))
     }
 };
 
@@ -111,13 +111,13 @@ export const clearEditorAndPreview = () => dispatch => {
     })
 };
 
-export const getTestDataNames = (name) => dispatch => {
+export const getTestDataNames = (name, format) => dispatch => {
     axios.get("maler/" + name + "/testdata").then(res => {
         dispatch({
             type: GET_TEST_DATA_NAMES,
             payload: res.data
         });
-        dispatch(getTemplateContentInHTML(name, res.data[0]))
+        dispatch(getTemplateContentInHTML(name, res.data[0], "", format))
     }
     )
 };
