@@ -11,7 +11,7 @@ class SelectTemplate extends Component {
 
     handleChange(event) {
         let selected = event.target.value;
-        this.props.setTemplateType(selected);
+        this.props.setTemplateType(selected, this.props.previewFormat);
     }
 
     render() {
@@ -37,11 +37,12 @@ class SelectTemplate extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
-    templates: state.templateReducer.templateNames
+    templates: state.templateReducer.templateNames,
+    previewFormat: state.templateReducer.previewFormat
 });
 
 const mapDispatchToProps = dispatch => ({
-    setTemplateType: (selected) => dispatch(selectedTemplate(selected)),
+    setTemplateType: (selected, format) => dispatch(selectedTemplate(selected, format)),
     getTemplateNames: () => dispatch(getTemplateNames())
 });
 
