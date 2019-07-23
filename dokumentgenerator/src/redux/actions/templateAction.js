@@ -13,6 +13,7 @@ export const GET_PDF = 'GET_PDF';
 export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
 export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
+export const GET_EMPTY_TEST_SET = 'GET_EMPTY_TEST_SET';
 
 
 export const selectedTemplate = (selected, format) => dispatch => {
@@ -128,3 +129,12 @@ export const setSelectedTestData = (testDataName) => dispatch => {
         payload: testDataName
     })
 };
+
+export const getEmptyTestSet = (templateName) => dispatch => {
+    axios.get("maler/" + templateName + "/tomtTestSett").then(res => {
+        dispatch({
+            type: GET_EMPTY_TEST_SET,
+            payload: res.data
+        })
+    })
+}
