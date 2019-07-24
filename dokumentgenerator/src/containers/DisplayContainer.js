@@ -4,6 +4,7 @@ import PreviewContainer from './PreviewContainer';
 import SelectTemplate from '../components/SelectTemplate';
 import Header from '../components/Header';
 import SelectTestSet from '../components/SelectTestSet';
+import CreateTestSet from '../components/CreateTestSet';
 
 
 export default class DisplayContainer extends Component {
@@ -15,6 +16,7 @@ export default class DisplayContainer extends Component {
                 <div style={style.selectFlexContainer}>
                     <SelectTemplate/>
                     <SelectTestSet style={style.selectFlexItems}/>
+                    <CreateTestSet style={style.selectFlexItems}/>
                 </div>
                 <div style={style.editorFlexContainer}>
                     <EditorContainer style={style.subContainer}/>
@@ -35,7 +37,7 @@ const style = {
         marginLeft: "2%"
     },
     selectFlexItems : {
-        paddingLeft: "30px",
+        paddingLeft: "30px"
     },
     editorFlexContainer : {
         height : "100%",

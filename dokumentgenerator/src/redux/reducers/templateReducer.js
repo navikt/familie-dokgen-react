@@ -70,7 +70,9 @@ export default (state = initialState, action) => {
             pdfArray : null,
             pdfContent : "",
             readOnly: true,
-            templateIsSelected : false
+            templateIsSelected : false,
+            emptyTestSet : "",
+            selectedTestData: null,
         }
     case GET_PDF:
         return {

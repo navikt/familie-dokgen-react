@@ -25,7 +25,8 @@ export const selectedTemplate = (selected, format) => dispatch => {
         dispatch(clearEditorAndPreview());
     } else {
         dispatch(getTemplateContentInMarkdown(selected));
-        dispatch(getTestDataNames(selected, format))
+        dispatch(getTestDataNames(selected, format));
+        dispatch(getEmptyTestSet(selected));
     }
 };
 

@@ -18,7 +18,7 @@ class SelectTestSet extends Component {
 
         return (
             <div style={this.props.style}>
-                {this.props.templateIsSelected && <Select label='Hvilken testsett vil du se?'
+                {this.props.templateIsSelected && <Select label='Hvilket testsett vil du se?'
                         bredde="xl"
                         onChange={(e) => this.handleChange(e)}
                         >
