@@ -7,6 +7,7 @@ import AceEditor from 'react-ace';
 import 'brace/mode/json';
 import 'brace/theme/textmate';
 import axios from 'axios';
+import { Input } from 'nav-frontend-skjema';
 
 
 class CreateTestSet extends Component {
@@ -16,7 +17,8 @@ class CreateTestSet extends Component {
 
         this.state = {
             modalIsOpen : false,
-            newTestSet : JSON.stringify(this.props.emptyTestSet)
+            newTestSet : JSON.stringify(this.props.emptyTestSet),
+            newTestSetName : ""
         }
     }
 
@@ -35,15 +37,21 @@ class CreateTestSet extends Component {
     }
 
     closeModal = () => {
-        this.setState({modalIsOpen : false, newTestSet : JSON.stringify(this.props.emptyTestSet, null, '\t')})
+        this.setState({modalIsOpen : false, newTestSet : JSON.stringify(this.props.emptyTestSet, null, '\t'), newTestSetName: ""})
     }
 
     onChange = (newValue) => {
         this.setState({newTestSet: newValue})
     }
 
-    saveNewTestSet = (templateName, content) => {
-        axios.post("maler/" + templateName + "/nyttTestSett", content, {
+    handleChange = (event) => {
+        this.setState({
+            newTestSetName : event.target.value
+        })
+    }
+
+    saveNewTestSet = (templateName, content, name) => {
+        axios.post("maler/" + templateName + "/nyttTestSett", {content : content, name : name}, {
             headers: {'Content-Type': 'application/json'}
         })
         this.closeModal();
@@ -62,6 +70,8 @@ class CreateTestSet extends Component {
                 >
                     <div style={{padding:'2rem 2.5rem'}}>
                     <h3>Lag nytt testsett for {this.props.selectedTemplate}-malen</h3>
+                    <Input label={'Navn på testsett'} 
+                            onChange={this.handleChange}/>
                     <AceEditor 
                         mode="json"
                         theme="textmate"
@@ -73,7 +83,7 @@ class CreateTestSet extends Component {
                         />
                     <Knapp type="standard" 
                             style={{margin:"auto", marginTop:"5px", display:"flex", justifyContent: "center"}}
-                            onClick={() => this.saveNewTestSet(this.props.selectedTemplate, this.state.newTestSet)}
+                            onClick={() => this.saveNewTestSet(this.props.selectedTemplate, this.state.newTestSet, this.state.newTestSetName)}
                     >
                         Lagre
                     </Knapp>
