@@ -9,7 +9,8 @@ import {
     SET_PDF_CONTENT,
     FORMAT_CHANGE,
     GET_TEST_DATA_NAMES,
-    SET_SELECTED_TEST_DATA
+    SET_SELECTED_TEST_DATA,
+    GET_EMPTY_TEST_SET
 
 } from "../actions/templateAction";
 
@@ -23,7 +24,8 @@ const initialState = {
     pdfContent : null,
     previewFormat : "html",
     testDataNames : [],
-    selectedTestData : ""
+    selectedTestData : "",
+    emptyTestSet : ""
 };
 
 export default (state = initialState, action) => {
@@ -68,7 +70,9 @@ export default (state = initialState, action) => {
             pdfArray : null,
             pdfContent : "",
             readOnly: true,
-            templateIsSelected : false
+            templateIsSelected : false,
+            emptyTestSet : "",
+            selectedTestData: null,
         }
     case GET_PDF:
         return {
@@ -91,6 +95,11 @@ export default (state = initialState, action) => {
         return {
             ...state,
             selectedTestData : action.payload
+        }
+    case GET_EMPTY_TEST_SET:
+        return {
+            ...state,
+            emptyTestSet : action.payload
         }
      default:
       return state
