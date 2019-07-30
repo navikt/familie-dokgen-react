@@ -12,6 +12,7 @@ export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
 export const GET_PDF = 'GET_PDF';
 export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
 export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
+export const ADD_TEST_DATA_NAME = 'ADD_TEST_DATA_NAME';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 export const GET_EMPTY_TEST_SET = 'GET_EMPTY_TEST_SET';
 
@@ -139,3 +140,22 @@ export const getEmptyTestSet = (templateName) => dispatch => {
         })
     })
 }
+
+export const saveNewTestSet = (templateName, content, name) => dispatch => {
+    axios.post(
+        "maler/" + templateName + "/nyttTestSett",
+        {
+            content : content,
+            name : name
+        },
+        {
+            headers: {'Content-Type': 'application/json'}
+        }
+    )
+        .then(res => {
+            dispatch({
+                type: ADD_TEST_DATA_NAME,
+                payload: res.data
+            });
+        });
+};
