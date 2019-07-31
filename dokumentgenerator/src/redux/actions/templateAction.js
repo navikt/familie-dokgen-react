@@ -1,6 +1,6 @@
 import axios from 'axios';
 import requestDataFormats from "../../API/requestDataFormats";
-import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, POST_TEMPLATE, PUT_TEMPLATE} from "../../API/url";
+import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_TEMPLATE, PUT_TEMPLATE, TEST_SET} from "../../API/url";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const FORMAT_CHANGE = 'FORMAT_CHANGE';
@@ -12,6 +12,7 @@ export const CLEAR_EDITOR_AND_PREVIEW = 'CLEAR_EDITOR_AND_PREVIEW';
 export const GET_PDF = 'GET_PDF';
 export const SET_PDF_CONTENT = 'SET_PDF_CONTENT';
 export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
+export const ADD_TEST_DATA_NAME = 'ADD_TEST_DATA_NAME';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 export const GET_EMPTY_TEST_SET = 'GET_EMPTY_TEST_SET';
 
@@ -114,7 +115,7 @@ export const clearEditorAndPreview = () => dispatch => {
 };
 
 export const getTestDataNames = (name, format) => dispatch => {
-    axios.get("maler/" + name + "/testdata").then(res => {
+    axios.get(TEST_SET + name + "/testdata").then(res => {
         dispatch({
             type: GET_TEST_DATA_NAMES,
             payload: res.data
@@ -132,10 +133,29 @@ export const setSelectedTestData = (testDataName) => dispatch => {
 };
 
 export const getEmptyTestSet = (templateName) => dispatch => {
-    axios.get("maler/" + templateName + "/tomtTestSett").then(res => {
+    axios.get(TEST_SET + templateName + "/tomtTestSett").then(res => {
         dispatch({
             type: GET_EMPTY_TEST_SET,
             payload: res.data
         })
     })
-}
+};
+
+export const saveNewTestSet = (templateName, content, name) => dispatch => {
+    axios.post(
+        TEST_SET + templateName + "/nyttTestSett",
+        {
+            content : content,
+            name : name
+        },
+        {
+            headers: {'Content-Type': 'application/json'}
+        }
+    )
+        .then(res => {
+            dispatch({
+                type: ADD_TEST_DATA_NAME,
+                payload: res.data
+            });
+        });
+};

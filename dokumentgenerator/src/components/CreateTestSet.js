@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Knapp from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { connect } from 'react-redux'
-import { getEmptyTestSet } from '../redux/actions/templateAction';
+import {getEmptyTestSet, saveNewTestSet} from '../redux/actions/templateAction';
 import AceEditor from 'react-ace';
 import 'brace/mode/json';
 import 'brace/theme/textmate';
@@ -34,28 +34,26 @@ class CreateTestSet extends Component {
 
     openModal = () => {
         this.setState({modalIsOpen : true});
-    }
+    };
 
     closeModal = () => {
         this.setState({modalIsOpen : false, newTestSet : JSON.stringify(this.props.emptyTestSet, null, '\t'), newTestSetName: ""})
-    }
+    };
 
     onChange = (newValue) => {
         this.setState({newTestSet: newValue})
-    }
+    };
 
     handleChange = (event) => {
         this.setState({
             newTestSetName : event.target.value
         })
-    }
+    };
 
     saveNewTestSet = (templateName, content, name) => {
-        axios.post("maler/" + templateName + "/nyttTestSett", {content : content, name : name}, {
-            headers: {'Content-Type': 'application/json'}
-        })
+        this.props.saveNewTestSet(templateName, content, name);
         this.closeModal();
-    }
+    };
     
 
     render(){
@@ -103,7 +101,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getEmptyTestSet : (name) => dispatch(getEmptyTestSet(name))
+    getEmptyTestSet : (name) => dispatch(getEmptyTestSet(name)),
+    saveNewTestSet : (templateName, content, name) => dispatch(saveNewTestSet(templateName, content, name))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTestSet);

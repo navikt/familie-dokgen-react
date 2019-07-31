@@ -9,6 +9,7 @@ import {
     SET_PDF_CONTENT,
     FORMAT_CHANGE,
     GET_TEST_DATA_NAMES,
+    ADD_TEST_DATA_NAME,
     SET_SELECTED_TEST_DATA,
     GET_EMPTY_TEST_SET
 
@@ -73,34 +74,41 @@ export default (state = initialState, action) => {
             templateIsSelected : false,
             emptyTestSet : "",
             selectedTestData: null,
-        }
+        };
     case GET_PDF:
         return {
             ...state,
             pdfArray: action.payload
-        }
+        };
     case SET_PDF_CONTENT: 
         return {
             ...state,
             pdfContent : action.payload
 
-        }
+        };
     case GET_TEST_DATA_NAMES: 
-    return {
-        ...state,
-        testDataNames : action.payload,
-        selectedTestData : action.payload[0]
-    }
+        return {
+            ...state,
+            testDataNames : action.payload,
+            selectedTestData : action.payload[0]
+        };
+    case ADD_TEST_DATA_NAME:
+        const appendedList = state.testDataNames.concat(action.payload);
+        return {
+            ...state,
+            testDataNames : appendedList,
+            selectedTestData : action.payload[0]
+        };
     case SET_SELECTED_TEST_DATA:
         return {
             ...state,
             selectedTestData : action.payload
-        }
+        };
     case GET_EMPTY_TEST_SET:
         return {
             ...state,
             emptyTestSet : action.payload
-        }
+        };
      default:
       return state
     }
