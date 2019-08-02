@@ -145,7 +145,7 @@ export const saveNewTestSet = (templateName, content, name) => dispatch => {
     axios.post(
         TEST_SET + templateName + "/nyttTestSett",
         {
-            content : content,
+            content : JSON.parse(content),
             name : name
         },
         {
