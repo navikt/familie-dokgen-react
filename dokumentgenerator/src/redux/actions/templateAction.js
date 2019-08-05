@@ -76,6 +76,14 @@ export const getTemplateContentInHTML = (name, testSetName, markdownContent="", 
                     payload: res.data
                 })
             }
+        }).catch((error) => {
+            const errorData = error.response.data;
+            const prettyString = JSON.stringify(errorData, undefined, 2);
+
+            dispatch({
+                type: VALIDATION_ERROR,
+                payload: prettyString
+            })
         });
 };
 
@@ -98,6 +106,14 @@ export const updateTemplateContent = (name, testSetName, markdownContent, format
                     payload: res.data
                 })
             }
+        }).catch((error) => {
+            const errorData = error.response.data;
+            const prettyString = JSON.stringify(errorData, undefined, 2);
+
+            dispatch({
+                type: VALIDATION_ERROR,
+                payload: prettyString
+            })
         });
 };
 
@@ -159,6 +175,8 @@ export const saveNewTestSet = (templateName, content, name) => dispatch => {
             });
     }).catch((error) => {
         const errorData = error.response.data;
+
+        //TODO: Format validation errors well
 
         /*
         if(errorData["causingExceptions"]) {
