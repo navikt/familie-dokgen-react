@@ -54,9 +54,9 @@ class Preview extends Component {
         else {
             return (
                 <div style={style.previewContainer}>
-                    <div style={style.errorContainer}>
+                    <pre style={style.errorContainer}>
                         {this.props.errorContent}
-                    </div>
+                    </pre>
                 </div>
             )
         }
