@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import Knapp from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { connect } from 'react-redux'
-import {getEmptyTestSet, saveNewTestSet} from '../redux/actions/templateAction';
+import {saveNewTestSet} from '../redux/actions/templateAction';
 import AceEditor from 'react-ace';
 import 'brace/mode/json';
 import 'brace/theme/textmate';
-import axios from 'axios';
 import { Input } from 'nav-frontend-skjema';
 
 
@@ -101,7 +100,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getEmptyTestSet : (name) => dispatch(getEmptyTestSet(name)),
     saveNewTestSet : (templateName, content, name) => dispatch(saveNewTestSet(templateName, content, name))
 });
 
