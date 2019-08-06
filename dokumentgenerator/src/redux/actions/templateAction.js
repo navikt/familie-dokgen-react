@@ -15,6 +15,7 @@ export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
 export const ADD_TEST_DATA_NAME = 'ADD_TEST_DATA_NAME';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 export const GET_EMPTY_TEST_SET = 'GET_EMPTY_TEST_SET';
+export const VALIDATION_ERROR = 'VALIDATION_ERROR';
 
 
 export const selectedTemplate = (selected, format) => dispatch => {
@@ -75,6 +76,14 @@ export const getTemplateContentInHTML = (name, testSetName, markdownContent="", 
                     payload: res.data
                 })
             }
+        }).catch((error) => {
+            const errorData = error.response.data;
+            const prettyString = JSON.stringify(errorData, undefined, 2);
+
+            dispatch({
+                type: VALIDATION_ERROR,
+                payload: prettyString
+            })
         });
 };
 
@@ -97,6 +106,14 @@ export const updateTemplateContent = (name, testSetName, markdownContent, format
                     payload: res.data
                 })
             }
+        }).catch((error) => {
+            const errorData = error.response.data;
+            const prettyString = JSON.stringify(errorData, undefined, 2);
+
+            dispatch({
+                type: VALIDATION_ERROR,
+                payload: prettyString
+            })
         });
 };
 
@@ -145,17 +162,48 @@ export const saveNewTestSet = (templateName, content, name) => dispatch => {
     axios.post(
         TEST_SET + templateName + "/nyttTestSett",
         {
-            content : content,
+            content : JSON.parse(content),
             name : name
         },
         {
             headers: {'Content-Type': 'application/json'}
         }
-    )
-        .then(res => {
+    ).then(res => {
             dispatch({
                 type: ADD_TEST_DATA_NAME,
                 payload: res.data
             });
-        });
+    }).catch((error) => {
+        const errorData = error.response.data;
+
+        //TODO: Format validation errors well
+
+        /*
+        if(errorData["causingExceptions"]) {
+            errorString = errorData["causingExceptions"]
+                .map(obj => {
+                    console.log(obj)
+                    return Object.entries(obj)
+                        .filter(key => {
+                            //JSON.parse(key.);
+                            console.log(key[0])
+                            return key[0] === "message" || key[0] === "pointerToViolation"
+                    })
+                })
+        }
+        else {
+            errorString = Object.entries(errorData)
+                .filter(key => {
+                    console.log(key)
+                    return key === "message" || key === "pointerToViolation"
+                })
+        }*/
+
+        const prettyString = JSON.stringify(errorData, undefined, 2);
+
+        dispatch({
+            type: VALIDATION_ERROR,
+            payload: prettyString
+        })
+    })
 };

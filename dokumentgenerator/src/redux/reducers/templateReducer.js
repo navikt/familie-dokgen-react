@@ -11,8 +11,8 @@ import {
     GET_TEST_DATA_NAMES,
     ADD_TEST_DATA_NAME,
     SET_SELECTED_TEST_DATA,
-    GET_EMPTY_TEST_SET
-
+    GET_EMPTY_TEST_SET,
+    VALIDATION_ERROR
 } from "../actions/templateAction";
 
 const initialState = { 
@@ -26,7 +26,8 @@ const initialState = {
     previewFormat : "html",
     testDataNames : [],
     selectedTestData : "",
-    emptyTestSet : ""
+    emptyTestSet : "",
+    errorContent : null
 };
 
 export default (state = initialState, action) => {
@@ -56,7 +57,8 @@ export default (state = initialState, action) => {
     case GET_TEMPLATE_CONTENT_HTML:
         return {
             ...state,
-            previewContent: action.payload
+            previewContent: action.payload,
+            errorContent: null
         };
     case UPDATE_EDITOR_CONTENT:
         return {
@@ -74,6 +76,7 @@ export default (state = initialState, action) => {
             templateIsSelected : false,
             emptyTestSet : "",
             selectedTestData: null,
+            errorContent: null
         };
     case GET_PDF:
         return {
@@ -83,8 +86,8 @@ export default (state = initialState, action) => {
     case SET_PDF_CONTENT: 
         return {
             ...state,
-            pdfContent : action.payload
-
+            pdfContent : action.payload,
+            errorContent: null
         };
     case GET_TEST_DATA_NAMES: 
         return {
@@ -109,7 +112,12 @@ export default (state = initialState, action) => {
             ...state,
             emptyTestSet : action.payload
         };
-     default:
+    case VALIDATION_ERROR:
+        return {
+            ...state,
+            errorContent: action.payload
+        };
+    default:
       return state
     }
    }

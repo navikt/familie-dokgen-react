@@ -28,26 +28,38 @@ class Preview extends Component {
     }
 
     render(){
-        return (
-            <div style={style.previewContainer}>
+
+        if(!this.props.errorContent) {
+            return (
+                <div style={style.previewContainer}>
                 { //Shows the iframe if PDF-tab is not chosen
-                    (this.props.previewFormat !== "pdf" && this.props.previewFormat !== "pdfa") &&
-                     <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>
+                (this.props.previewFormat !== "pdf" && this.props.previewFormat !== "pdfa") &&
+                <iframe style={this.updateStyle()} title="previewFrame" srcDoc={this.props.previewContent}/>
                 }
                 {   //Shows the PDF if PDF-tab is chosen
                     (this.props.previewFormat === "pdf" || this.props.previewFormat === "pdfa") &&
                     <div style={style.PDF}>
-                        <Document 
-                            file={this.props.pdfContent}
-                            error={"Kunne ikke laste inn PDF-fil."}
-                            noData={"Ingen PDF-fil valgt."}
-                            loading={"Laster inn PDF."}> 
-                            <Page scale={1} pageNumber={1}/>
-                        </Document>
-                    </div>
+                    <Document
+                    file={this.props.pdfContent}
+                    error={"Kunne ikke laste inn PDF-fil."}
+                    noData={"Ingen PDF-fil valgt."}
+                    loading={"Laster inn PDF."}>
+                        <Page scale={1} pageNumber={1}/>
+                </Document>
+                </div>
                 }
             </div>
-        )
+            )
+        }
+        else {
+            return (
+                <div style={style.previewContainer}>
+                    <div style={style.errorContainer}>
+                        {this.props.errorContent}
+                    </div>
+                </div>
+            )
+        }
     }
 }
 
@@ -57,7 +69,8 @@ const mapStateToProps = state => ({
     previewContent: state.templateReducer.previewContent,
     pdfContent: state.templateReducer.pdfContent,
     previewFormat: state.templateReducer.previewFormat,
-    selectedTestData: state.templateReducer.selectedTestData
+    selectedTestData: state.templateReducer.selectedTestData,
+    errorContent: state.templateReducer.errorContent
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -103,5 +116,14 @@ const style = {
     PDF : { 
         height: "90%",
         overflow: "scroll",
+    },
+    errorContainer : {
+        width: "95%",
+        height: "80%",
+        border: "none",
+        alignItems: "left",
+        justifyContent: "left",
+        textAlign: "left",
+        backgroundColor: Colors.baseColors.errorBackground
     }
-}
+};
