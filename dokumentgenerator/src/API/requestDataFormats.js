@@ -1,14 +1,16 @@
 export default {
-    letterGenJsonParamsTestset(testSetName, markdownContent) {
+    letterGenJsonParamsTestset(testSetName, markdownContent, useTestSet) {
         return {
             "testSetName": testSetName,
             "markdownContent": markdownContent,
+            "useTestSet": useTestSet
         }
     },
-    letterGenJsonParamsFields(interleavingFields, markdownContent) {
+    letterGenJsonParamsFields(interleavingFields, markdownContent, useTestSet) {
         return {
             "interleavingFields": interleavingFields,
             "markdownContent": markdownContent,
+            "useTestSet": useTestSet
         }
     },
     letterGenJsonHeaders(format) {

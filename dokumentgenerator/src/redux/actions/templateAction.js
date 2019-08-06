@@ -59,7 +59,7 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 export const getTemplateContentInHTML = (name, testSetName, markdownContent="", format="html") => dispatch => {
     return axios.post(
         `${POST_TEMPLATE}${format}/${name}`,
-        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent),
+        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent, true),
         requestDataFormats.letterGenJsonHeaders(format)
     )
         .then(res => {
@@ -81,7 +81,7 @@ export const getTemplateContentInHTML = (name, testSetName, markdownContent="", 
 export const updateTemplateContent = (name, testSetName, markdownContent, format="html") => dispatch => {
     return axios.put(
         `${PUT_TEMPLATE}${format}/${name}`,
-        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent),
+        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent, true),
         requestDataFormats.letterGenJsonHeaders(format)
     )
         .then(res => {
