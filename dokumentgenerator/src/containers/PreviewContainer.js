@@ -1,6 +1,7 @@
+import {Knapp} from "nav-frontend-knapper";
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { getTemplateContentInHTML, updatePreviewFormat } from '../redux/actions/templateAction'
+import {downloadPdf, getTemplateContentInHTML, updatePreviewFormat} from '../redux/actions/templateAction'
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
 import Colors from '../assets/Colors'
@@ -31,6 +32,18 @@ class PreviewContainer extends Component {
         }
 
     render(){
+        const downloadBtn = () => {
+            if(this.props.previewFormat === "pdf") {
+                return (
+                    <Knapp type="standard"
+                        style={{margin:"auto", marginTop:"5px", display:"flex", justifyContent: "center"}}
+                        onClick={() => this.props.downloadPdf(this.props.selectedTemplate, this.props.selectedTestData)}
+                    >
+                        Last ned PDF
+                    </Knapp>)
+            }
+        };
+
         return (
             <div style={this.props.style}> 
                 <Tabs 
@@ -47,6 +60,7 @@ class PreviewContainer extends Component {
                     stylingClassName={this.state.stylingClassName} 
                     isPDF={this.props.previewFormat}
                 />
+                {downloadBtn()}
             </div>
         )
     }
@@ -55,12 +69,14 @@ class PreviewContainer extends Component {
 const mapStateToProps = state => ({
     ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
-    previewFormat: state.templateReducer.previewFormat
+    previewFormat: state.templateReducer.previewFormat,
+    selectedTestData: state.templateReducer.selectedTestData
 });
 
 const mapDispatchToProps = dispatch => ({
     getTemplateContentInHTML: (name) => dispatch(getTemplateContentInHTML(name)),
-    updatePreviewFormat: (format) => dispatch(updatePreviewFormat(format))
+    updatePreviewFormat: (format) => dispatch(updatePreviewFormat(format)),
+    downloadPdf: (name, testSetName) => dispatch(downloadPdf(name, testSetName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (PreviewContainer)

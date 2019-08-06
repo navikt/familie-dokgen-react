@@ -1,6 +1,9 @@
 import axios from 'axios';
 import requestDataFormats from "../../API/requestDataFormats";
-import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_TEMPLATE, PUT_TEMPLATE, TEST_SET} from "../../API/url";
+import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, POST_TEMPLATE, PUT_TEMPLATE, TEST_SET} from "../../API/url";
+
+import path from "path";
+import fs from "fs";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const FORMAT_CHANGE = 'FORMAT_CHANGE';
@@ -98,6 +101,23 @@ export const updateTemplateContent = (name, testSetName, markdownContent, format
                 })
             }
         });
+};
+
+export const downloadPdf = (name, testSetName) => dispatch => {
+    return axios.post(
+        `${POST_LETTER}${name}/download`,
+        requestDataFormats.letterDownloadPdfParamsTestset(testSetName, true),
+        requestDataFormats.letterGenJsonHeaders("pdf")
+    )
+        .then(res => {
+            const a = document.createElement('a');
+            a.href = window.URL.createObjectURL(res.data);
+            a.download = `${testSetName}.pdf`;
+            a.click();
+        })
+        .catch(error => {
+            console.log("ah shit", error.message)
+        })
 };
 
 export const updateEditorContent = (content) => dispatch => {

@@ -13,6 +13,12 @@ export default {
             "useTestSet": useTestSet
         }
     },
+    letterDownloadPdfParamsTestset(testSetName, useTestSet) {
+        return {
+            "testSetName": testSetName,
+            "useTestSet": useTestSet
+        }
+    },
     letterGenJsonHeaders(format) {
         if(format === "html") {
             return {
