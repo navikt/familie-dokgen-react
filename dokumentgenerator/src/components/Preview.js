@@ -1,3 +1,4 @@
+import NavFrontendSpinner from "nav-frontend-spinner";
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { getTemplateContentInHTML } from "../redux/actions/templateAction";
@@ -42,8 +43,8 @@ class Preview extends Component {
                     <Document
                     file={this.props.pdfContent}
                     error={"Kunne ikke laste inn PDF-fil."}
-                    noData={"Ingen PDF-fil valgt."}
-                    loading={"Laster inn PDF."}>
+                    noData={<NavFrontendSpinner />}
+                    loading={<NavFrontendSpinner />}>
                         <Page scale={1} pageNumber={1}/>
                 </Document>
                 </div>
