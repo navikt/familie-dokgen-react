@@ -1,6 +1,6 @@
 import axios from 'axios';
 import requestDataFormats from "../../API/requestDataFormats";
-import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_TEMPLATE, PUT_TEMPLATE, TEST_SET} from "../../API/url";
+import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, POST_TEMPLATE, PUT_TEMPLATE, TEST_SET} from "../../API/url";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const FORMAT_CHANGE = 'FORMAT_CHANGE';
@@ -15,7 +15,7 @@ export const GET_TEST_DATA_NAMES = 'GET_TEST_SET_NAMES';
 export const ADD_TEST_DATA_NAME = 'ADD_TEST_DATA_NAME';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 export const GET_EMPTY_TEST_SET = 'GET_EMPTY_TEST_SET';
-export const VALIDATION_ERROR = 'VALIDATION_ERROR';
+export const PREVIEW_ERROR = 'PREVIEW_ERROR';
 
 
 export const selectedTemplate = (selected, format) => dispatch => {
@@ -60,7 +60,7 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
 export const getTemplateContentInHTML = (name, testSetName, markdownContent="", format="html") => dispatch => {
     return axios.post(
         `${POST_TEMPLATE}${format}/${name}`,
-        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent),
+        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent, true),
         requestDataFormats.letterGenJsonHeaders(format)
     )
         .then(res => {
@@ -81,7 +81,7 @@ export const getTemplateContentInHTML = (name, testSetName, markdownContent="", 
             const prettyString = JSON.stringify(errorData, undefined, 2);
 
             dispatch({
-                type: VALIDATION_ERROR,
+                type: PREVIEW_ERROR,
                 payload: prettyString
             })
         });
@@ -90,7 +90,7 @@ export const getTemplateContentInHTML = (name, testSetName, markdownContent="", 
 export const updateTemplateContent = (name, testSetName, markdownContent, format="html") => dispatch => {
     return axios.put(
         `${PUT_TEMPLATE}${format}/${name}`,
-        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent),
+        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent, true),
         requestDataFormats.letterGenJsonHeaders(format)
     )
         .then(res => {
@@ -111,10 +111,30 @@ export const updateTemplateContent = (name, testSetName, markdownContent, format
             const prettyString = JSON.stringify(errorData, undefined, 2);
 
             dispatch({
-                type: VALIDATION_ERROR,
+                type: PREVIEW_ERROR,
                 payload: prettyString
             })
         });
+};
+
+export const downloadPdf = (name, testSetName) => dispatch => {
+    return axios.post(
+        `${POST_LETTER}${name}/download`,
+        requestDataFormats.letterDownloadPdfParamsTestset(testSetName, true),
+        requestDataFormats.letterGenJsonHeaders("pdf")
+    )
+        .then(res => {
+            const a = document.createElement('a');
+            a.href = window.URL.createObjectURL(res.data);
+            a.download = `${testSetName}.pdf`;
+            a.click();
+        })
+        .catch(error => {
+            dispatch({
+                type: PREVIEW_ERROR,
+                payload: error.message
+            })
+        })
 };
 
 export const updateEditorContent = (content) => dispatch => {
@@ -202,7 +222,7 @@ export const saveNewTestSet = (templateName, content, name) => dispatch => {
         const prettyString = JSON.stringify(errorData, undefined, 2);
 
         dispatch({
-            type: VALIDATION_ERROR,
+            type: PREVIEW_ERROR,
             payload: prettyString
         })
     })

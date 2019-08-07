@@ -12,7 +12,7 @@ import {
     ADD_TEST_DATA_NAME,
     SET_SELECTED_TEST_DATA,
     GET_EMPTY_TEST_SET,
-    VALIDATION_ERROR
+    PREVIEW_ERROR
 } from "../actions/templateAction";
 
 const initialState = { 
@@ -112,7 +112,7 @@ export default (state = initialState, action) => {
             ...state,
             emptyTestSet : action.payload
         };
-    case VALIDATION_ERROR:
+    case PREVIEW_ERROR:
         return {
             ...state,
             errorContent: action.payload
