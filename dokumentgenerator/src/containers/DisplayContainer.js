@@ -14,7 +14,7 @@ export default class DisplayContainer extends Component {
             <div style={style.displayContainer}>
                 <Header/>
                 <div style={style.selectFlexContainer}>
-                    <SelectTemplate/>
+                    <SelectTemplate style={style.selectFlexItems}/>
                     <SelectTestSet style={style.selectFlexItems}/>
                     <CreateTestSet style={style.selectFlexItems}/>
                 </div>
@@ -33,24 +33,23 @@ const style = {
     },
     selectFlexContainer : {
         display: "flex",
-        marginTop: "2rem",
-        marginLeft: "2%"
+        flexWrap: "wrap",
+        justifyContent : "flex-start",
     },
     selectFlexItems : {
-        paddingLeft: "30px"
+        margin: "1%"
     },
     editorFlexContainer : {
-        height : "100%",
+        height : "80%",
         display : "flex",
-        justifyContent : "space-evenly",
-        marginTop: "1rem",
-        marginLeft: "1%",
-        marginRight: "1%"
-    }, 
+        flexWrap: "wrap",
+        justifyContent : "space-between"
+    },
     subContainer : {
-        height: "70%",
-        width: "100%",
-        margin: "1%",
-        marginTop: 0
+        height: "100%",
+        width: "47%",
+        minWidth: "600px",
+        margin: "1em 0 1em 0",
+        padding: "0 1% 0 1%"
     }
-}
+};

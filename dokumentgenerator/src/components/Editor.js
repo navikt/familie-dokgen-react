@@ -56,9 +56,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Editor)
 
 const style = {
     editorContainer : {
-        height: "100%", 
-        borderTop: "none",
-        border: "1px solid" + Colors.baseColors.navGra20
+        height: "95%",
+        border: "1px solid" + Colors.baseColors.navGra20,
+        borderTop: "none"
     },
     aceEdit : {
         width:"100%",

@@ -8,14 +8,14 @@ class Header extends Component {
     
     render(){
         return (
-            <div>
+            <header>
                 <Panel style={style.headerPanel}>
                     <div style={style.headerFlex}>
                         <img src={logo} alt="logo"/>
                         <Systemtittel style={style.title}>Dokumentgenerator</Systemtittel>
                     </div>
                 </Panel>
-            </div>
+            </header>
         )
     }
 }
@@ -26,8 +26,7 @@ const style = {
     headerPanel : {
         borderBottom : "4px solid" + Colors.baseColors.navLysGra,
         marginBottom: "8px",
-        width: "100%",
-    }, 
+    },
     headerFlex : {
         marginLeft: "16px",
         display: "flex", 
@@ -36,4 +35,4 @@ const style = {
     title : {
         padding: "16px"
     }
-}
+};
