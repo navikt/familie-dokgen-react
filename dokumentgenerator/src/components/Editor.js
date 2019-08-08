@@ -33,7 +33,6 @@ class Editor extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
     editorContent : state.templateReducer.editorContent,
     readOnly: state.templateReducer.readOnly,

@@ -67,7 +67,6 @@ class PreviewContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
     previewFormat: state.templateReducer.previewFormat,
     selectedTestData: state.templateReducer.selectedTestData

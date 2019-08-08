@@ -93,7 +93,6 @@ class CreateTestSet extends Component {
 
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
     templateIsSelected : state.templateReducer.templateIsSelected,
     emptyTestSet : state.templateReducer.emptyTestSet

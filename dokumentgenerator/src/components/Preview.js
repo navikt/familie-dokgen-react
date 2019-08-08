@@ -65,7 +65,6 @@ class Preview extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
     previewContent: state.templateReducer.previewContent,
     pdfContent: state.templateReducer.pdfContent,
