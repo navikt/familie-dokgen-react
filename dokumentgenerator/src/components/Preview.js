@@ -9,7 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pd
 
 class Preview extends Component {
     componentDidUpdate(prevProps, prevState, snapshot){
-        if(prevProps.previewFormat !== this.props.previewFormat){
+        if(this.props.selectedTemplate && prevProps.previewFormat !== this.props.previewFormat){
             this.props.getTemplateContentInHTML(this.props.selectedTemplate, this.props.selectedTestData, "", this.props.previewFormat);
         }
     }
