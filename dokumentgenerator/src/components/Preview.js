@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { getTemplateContentInHTML } from "../redux/actions/templateAction";
 import Colors from '../assets/Colors'
 import { Document, pdfjs, Page } from 'react-pdf'
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 
 class Preview extends Component {
