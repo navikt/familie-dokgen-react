@@ -36,7 +36,7 @@ class PreviewContainer extends Component {
             if(this.props.previewFormat === "pdf") {
                 return (
                     <Knapp type="standard"
-                        style={{margin:"auto", margin:"1em auto 3em auto", display:"flex", justifyContent: "center"}}
+                        style={{margin:"1em auto 3em auto", display:"flex", justifyContent: "center"}}
                         onClick={() => this.props.downloadPdf(this.props.selectedTemplate, this.props.selectedTestData)}
                     >
                         Last ned PDF
