@@ -35,7 +35,6 @@ class SelectTemplate extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
     templates: state.templateReducer.templateNames,
     previewFormat: state.templateReducer.previewFormat

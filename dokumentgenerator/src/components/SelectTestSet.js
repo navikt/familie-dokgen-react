@@ -30,7 +30,6 @@ class SelectTestSet extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate: state.templateReducer.selectedTemplate,
     templateIsSelected : state.templateReducer.templateIsSelected,
     testDataNames: state.templateReducer.testDataNames,

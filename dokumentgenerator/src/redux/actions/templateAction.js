@@ -126,7 +126,7 @@ export const downloadPdf = (name, testSetName) => dispatch => {
         .then(res => {
             const a = document.createElement('a');
             a.href = window.URL.createObjectURL(res.data);
-            a.download = `${testSetName}.pdf`;
+            a.download = `${name}_${testSetName}.pdf`;
             a.click();
         })
         .catch(error => {

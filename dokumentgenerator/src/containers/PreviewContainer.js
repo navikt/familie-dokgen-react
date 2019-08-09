@@ -36,7 +36,7 @@ class PreviewContainer extends Component {
             if(this.props.previewFormat === "pdf") {
                 return (
                     <Knapp type="standard"
-                        style={{margin:"auto", marginTop:"5px", display:"flex", justifyContent: "center"}}
+                        style={{margin:"1em auto 3em auto", display:"flex", justifyContent: "center"}}
                         onClick={() => this.props.downloadPdf(this.props.selectedTemplate, this.props.selectedTestData)}
                     >
                         Last ned PDF
@@ -45,7 +45,7 @@ class PreviewContainer extends Component {
         };
 
         return (
-            <div style={this.props.style}> 
+            <div style={this.props.style}>
                 <Tabs 
                     tabs={[
                         {"label": this.state.tabNames[0]},
@@ -67,7 +67,6 @@ class PreviewContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state,
     selectedTemplate : state.templateReducer.selectedTemplate,
     previewFormat: state.templateReducer.previewFormat,
     selectedTestData: state.templateReducer.selectedTestData
