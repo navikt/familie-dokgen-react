@@ -5,7 +5,7 @@ import {downloadPdf, getTemplateContentInHTML, updatePreviewFormat} from '../red
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
 import Colors from '../assets/Colors'
-
+import { MOBIL, NETTBRETT, PDF, WEB } from "./Constants";
 
 class PreviewContainer extends Component {
 
@@ -13,7 +13,7 @@ class PreviewContainer extends Component {
         super();
 
         this.state = {
-            tabNames : ["Web", "Nettbrett", "Mobil", "PDF"],
+            tabNames : [WEB, NETTBRETT, MOBIL, PDF],
             chosenTab : 0,
             stylingClassName : "Web"
         }
@@ -23,7 +23,7 @@ class PreviewContainer extends Component {
         this.setState({
             chosenTab : index,
             stylingClassName : this.state.tabNames[index]
-        })
+        });
         if(this.state.tabNames[index] === "PDF"){
             this.props.updatePreviewFormat("pdf")
         } else {
@@ -46,18 +46,18 @@ class PreviewContainer extends Component {
 
         return (
             <div style={this.props.style}>
-                <Tabs 
+                <Tabs
                     tabs={[
                         {"label": this.state.tabNames[0]},
                         {"label": this.state.tabNames[1]},
                         {"label": this.state.tabNames[2]},
                         {"label" : this.state.tabNames[3]}
                     ]}
-                    onChange={(event, index) => this.handleSelect(event, index)} 
+                    onChange={(event, index) => this.handleSelect(event, index)}
                     style={{border: "1px solid" + Colors.baseColors.navGra20}}
                 />
-                <Preview 
-                    stylingClassName={this.state.stylingClassName} 
+                <Preview
+                    stylingClassName={this.state.stylingClassName}
                     isPDF={this.props.previewFormat}
                 />
                 {downloadBtn()}

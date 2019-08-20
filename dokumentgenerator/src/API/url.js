@@ -1,12 +1,8 @@
 export const BASE = '';//'http://localhost:8080';
 
 //// Templates ////
-export const GET_TEMPLATE = `${BASE}/mal/`;
-export const GET_ALL_TEMPLATE_NAMES = `${BASE}/mal/alle/`;
-export const POST_TEMPLATE = `${BASE}/mal/`;
-export const PUT_TEMPLATE = `${BASE}/mal/`;
-export const DELETE_TEMPLATE = `${BASE}/mal/`;
-export const TEST_SET = `${BASE}/mal/`;
+export const MAL = `${BASE}/mal/`;
+export const MAL_ALLE = `${BASE}/mal/alle/`;
 
 //// Letter ////
-export const POST_LETTER = `${BASE}/brev/`;
+export const BREV = `${BASE}/brev/`;

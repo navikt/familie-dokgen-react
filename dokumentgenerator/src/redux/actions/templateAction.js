@@ -1,6 +1,6 @@
 import axios from 'axios';
 import requestDataFormats from "../../API/requestDataFormats";
-import {GET_ALL_TEMPLATE_NAMES, GET_TEMPLATE, POST_LETTER, POST_TEMPLATE, PUT_TEMPLATE, TEST_SET} from "../../API/url";
+import { MAL, MAL_ALLE, BREV } from "../../API/url";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const FORMAT_CHANGE = 'FORMAT_CHANGE';
@@ -40,7 +40,7 @@ export const updatePreviewFormat = (format) => dispatch => {
 };
 
 export const getTemplateNames = () => dispatch => {
-    axios.get(GET_ALL_TEMPLATE_NAMES).then(res =>
+    axios.get(MAL_ALLE).then(res =>
         dispatch({
             type: GET_TEMPLATE_NAMES,
             payload: res.data
@@ -48,8 +48,8 @@ export const getTemplateNames = () => dispatch => {
     );
 };
 
-export const getTemplateContentInMarkdown = (name) => dispatch => {
-    axios.get(`${GET_TEMPLATE}${name}`).then(res =>
+export const getTemplateContentInMarkdown = (malNavn) => dispatch => {
+    axios.get(`${MAL}${malNavn}`).then(res =>
         dispatch({
             type: GET_TEMPLATE_CONTENT_MARKDOWN,
             payload: res.data
@@ -57,9 +57,37 @@ export const getTemplateContentInMarkdown = (name) => dispatch => {
     );
 };
 
-export const getTemplateContentInHTML = (name, testSetName, markdownContent="", format="html") => dispatch => {
-    return axios.post(
-        `${POST_TEMPLATE}${format}/${name}`,
+export const getTemplateContentInHTML = (malNavn, testSetNavn, markdownContent="", format="html") => dispatch => {
+    return axios.post(`${MAL}${format}/${malNavn}`,
+        requestDataFormats.letterGenJsonParamsTestset(testSetNavn, markdownContent, true),
+        requestDataFormats.letterGenJsonHeaders(format)
+    )
+        .then(res => {
+            if(res.headers['content-type'] === 'application/pdf'){
+                dispatch({
+                    type: SET_PDF_CONTENT,
+                    payload: window.URL.createObjectURL(res.data)
+                })
+            }
+            else if(res.headers['content-type'] === 'text/html'){
+                dispatch({
+                    type: GET_TEMPLATE_CONTENT_HTML,
+                    payload: res.data
+                })
+            }
+        }).catch((error) => {
+            const errorData = error.response.data;
+            const prettyString = JSON.stringify(errorData, undefined, 2);
+
+            dispatch({
+                type: PREVIEW_ERROR,
+                payload: prettyString
+            })
+        });
+};
+
+export const updateTemplateContent = (malNavn, testSetName, markdownContent, format="html") => dispatch => {
+    return axios.put(`${MAL}${format}/${malNavn}`,
         requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent, true),
         requestDataFormats.letterGenJsonHeaders(format)
     )
@@ -87,46 +115,15 @@ export const getTemplateContentInHTML = (name, testSetName, markdownContent="", 
         });
 };
 
-export const updateTemplateContent = (name, testSetName, markdownContent, format="html") => dispatch => {
-    return axios.put(
-        `${PUT_TEMPLATE}${format}/${name}`,
-        requestDataFormats.letterGenJsonParamsTestset(testSetName, markdownContent, true),
-        requestDataFormats.letterGenJsonHeaders(format)
-    )
-        .then(res => {
-            if(res.headers['content-type'] === 'application/pdf'){
-                dispatch({
-                    type: SET_PDF_CONTENT,
-                    payload: window.URL.createObjectURL(res.data)
-                })
-            }
-            else if(res.headers['content-type'] === 'text/html'){
-                dispatch({
-                    type: GET_TEMPLATE_CONTENT_HTML,
-                    payload: res.data
-                })
-            }
-        }).catch((error) => {
-            const errorData = error.response.data;
-            const prettyString = JSON.stringify(errorData, undefined, 2);
-
-            dispatch({
-                type: PREVIEW_ERROR,
-                payload: prettyString
-            })
-        });
-};
-
-export const downloadPdf = (name, testSetName) => dispatch => {
-    return axios.post(
-        `${POST_LETTER}${name}/download`,
-        requestDataFormats.letterDownloadPdfParamsTestset(testSetName, true),
+export const downloadPdf = (malNavn, testSetNavn) => dispatch => {
+    return axios.post(`${BREV}${malNavn}/download`,
+        requestDataFormats.letterDownloadPdfParamsTestset(testSetNavn, true),
         requestDataFormats.letterGenJsonHeaders("pdf")
     )
         .then(res => {
             const a = document.createElement('a');
             a.href = window.URL.createObjectURL(res.data);
-            a.download = `${name}_${testSetName}.pdf`;
+            a.download = `${malNavn}_${testSetNavn}.pdf`;
             a.click();
         })
         .catch(error => {
@@ -151,13 +148,13 @@ export const clearEditorAndPreview = () => dispatch => {
     })
 };
 
-export const getTestDataNames = (name, format) => dispatch => {
-    axios.get(TEST_SET + name + "/testdata").then(res => {
+export const getTestDataNames = (malNavn, format) => dispatch => {
+    axios.get(`${MAL}${malNavn}/testdata`).then(res => {
         dispatch({
             type: GET_TEST_DATA_NAMES,
             payload: res.data
         });
-        dispatch(getTemplateContentInHTML(name, res.data[0], "", format))
+        dispatch(getTemplateContentInHTML(malNavn, res.data[0], "", format))
     }
     )
 };
@@ -169,8 +166,8 @@ export const setSelectedTestData = (testDataName) => dispatch => {
     })
 };
 
-export const getEmptyTestSet = (templateName) => dispatch => {
-    axios.get(TEST_SET + templateName + "/tomtTestSett").then(res => {
+export const getEmptyTestSet = (malNavn) => dispatch => {
+    axios.get(`${MAL}${malNavn}/tomtTestSett`).then(res => {
         dispatch({
             type: GET_EMPTY_TEST_SET,
             payload: res.data
@@ -178,9 +175,8 @@ export const getEmptyTestSet = (templateName) => dispatch => {
     })
 };
 
-export const saveNewTestSet = (templateName, content, name) => dispatch => {
-    axios.post(
-        TEST_SET + templateName + "/nyttTestSett",
+export const saveNewTestSet = (malNavn, content, name) => dispatch => {
+    axios.post(`${MAL}${malNavn}/nyttTestSett`,
         {
             content : JSON.parse(content),
             name : name
