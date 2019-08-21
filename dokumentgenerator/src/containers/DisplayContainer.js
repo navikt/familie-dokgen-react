@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditorContainer from './EditorContainer';
+import EditorContainer from './EditContainer';
 import PreviewContainer from './PreviewContainer';
 import SelectTemplate from '../components/SelectTemplate';
 import Header from '../components/Header';
