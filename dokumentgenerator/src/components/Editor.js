@@ -6,12 +6,20 @@ import 'brace/mode/markdown';
 import 'brace/theme/textmate';
 import {getTemplateContentInHTML, updateEditorContent, updateTemplateContent} from "../redux/actions/templateAction";
 
-
 class Editor extends Component {
 
     onChange = (newValue) => {
         this.props.updateEditorContent(newValue);
-        this.props.updateTemplateContent(this.props.selectedTemplate, this.props.selectedTestData, newValue, this.props.previewFormat);
+        if (!this.props.readOnly) {
+            this.props.updateTemplateContent(this.props.selectedTemplate, this.props.selectedTestData, newValue, this.props.previewFormat);
+        }
+    };
+
+    onChangeFold = (event) => {
+        if (this.props.selectedTemplate !== "") {
+            let filter = JSON.stringify({"action": event.action, "range": event.data.range, "tab": this.props.aktivTab});
+            this.props.getTemplateContentInHTML(this.props.selectedTemplate, this.props.selectedTestData, "", this.props.previewFormat, filter);
+        }
     };
 
     render(){
@@ -26,6 +34,9 @@ class Editor extends Component {
                     value={this.props.editorContent}
                     style={style.aceEdit}
                     readOnly={this.props.readOnly}
+                    onLoad={(editor) => {
+                        editor.getSession().on("changeFold", this.onChangeFold)
+                    }}
                     />
             </div>
         )
@@ -37,15 +48,16 @@ const mapStateToProps = state => ({
     editorContent : state.templateReducer.editorContent,
     readOnly: state.templateReducer.readOnly,
     previewFormat: state.templateReducer.previewFormat,
-    selectedTestData: state.templateReducer.selectedTestData
+    selectedTestData: state.templateReducer.selectedTestData,
+    aktivTab: state.templateReducer.aktivTab,
 });
 
 
 const mapDispatchToProps = dispatch => ({
     updateEditorContent: (content) => dispatch(updateEditorContent(content)),
 
-    getTemplateContentInHTML: (name, interleavingFields, markdownContent, format) =>
-        dispatch(getTemplateContentInHTML(name, interleavingFields, markdownContent, format)),
+    getTemplateContentInHTML: (name, interleavingFields, markdownContent, format, filter) =>
+        dispatch(getTemplateContentInHTML(name, interleavingFields, markdownContent, format, filter)),
 
     updateTemplateContent: (name, interleavingFields, markdownContent, format) =>
         dispatch(updateTemplateContent(name, interleavingFields, markdownContent, format)),

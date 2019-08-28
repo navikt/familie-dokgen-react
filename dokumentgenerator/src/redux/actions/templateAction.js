@@ -1,6 +1,7 @@
 import axios from 'axios';
 import requestDataFormats from "../../API/requestDataFormats";
 import { MAL, MAL_ALLE, BREV } from "../../API/url";
+import { FELLESMAL} from "../../AppConstants";
 
 export const SELECTED_TEMPLATE = 'SELECTED_TEMPLATE';
 export const FORMAT_CHANGE = 'FORMAT_CHANGE';
@@ -16,6 +17,7 @@ export const ADD_TEST_DATA_NAME = 'ADD_TEST_DATA_NAME';
 export const SET_SELECTED_TEST_DATA = 'SET_SELECTED_TEST_DATA';
 export const GET_EMPTY_TEST_SET = 'GET_EMPTY_TEST_SET';
 export const PREVIEW_ERROR = 'PREVIEW_ERROR';
+export const SET_AKTIV_TAB = 'SET_AKTIV_TAB';
 
 
 export const selectedTemplate = (selected, format) => dispatch => {
@@ -23,10 +25,9 @@ export const selectedTemplate = (selected, format) => dispatch => {
         type: SELECTED_TEMPLATE,
         payload: selected
     });
-    if(selected===""){
-        dispatch(clearEditorAndPreview());
-    } else {
-        dispatch(getTemplateContentInMarkdown(selected));
+    dispatch(setAktivTab(0, selected));
+
+    if (selected!=="") {
         dispatch(getTestDataNames(selected, format));
         dispatch(getEmptyTestSet(selected));
     }
@@ -37,6 +38,20 @@ export const updatePreviewFormat = (format) => dispatch => {
         type: FORMAT_CHANGE,
         payload: format
     })
+};
+
+export const setAktivTab = (tabNr, aktivMal) => dispatch => {
+    dispatch({
+        type: SET_AKTIV_TAB,
+        payload: tabNr
+    });
+    if (tabNr===1) {
+        dispatch(getTemplateContentInMarkdown(FELLESMAL));
+    } else if (aktivMal !== "") {
+        dispatch(getTemplateContentInMarkdown(aktivMal));
+    } else {
+        dispatch(clearEditorAndPreview());
+    }
 };
 
 export const getTemplateNames = () => dispatch => {
@@ -57,9 +72,9 @@ export const getTemplateContentInMarkdown = (malNavn) => dispatch => {
     );
 };
 
-export const getTemplateContentInHTML = (malNavn, testSetNavn, markdownContent="", format="html") => dispatch => {
+export const getTemplateContentInHTML = (malNavn, testSetNavn, markdownContent="", format="html", filter={}) => dispatch => {
     return axios.post(`${MAL}${format}/${malNavn}`,
-        requestDataFormats.letterGenJsonParamsTestset(testSetNavn, markdownContent, true),
+        requestDataFormats.letterGenJsonParamsTestset(testSetNavn, markdownContent, true, filter),
         requestDataFormats.letterGenJsonHeaders(format)
     )
         .then(res => {

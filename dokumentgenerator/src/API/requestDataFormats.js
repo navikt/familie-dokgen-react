@@ -1,9 +1,10 @@
 export default {
-    letterGenJsonParamsTestset(testSetName, markdownContent, useTestSet) {
+    letterGenJsonParamsTestset(testSetName, markdownContent, useTestSet, filter={}) {
         return {
             "testSetName": testSetName,
             "markdownContent": markdownContent,
-            "useTestSet": useTestSet
+            "useTestSet": useTestSet,
+            "filter": filter,
         }
     },
     letterGenJsonParamsFields(interleavingFields, markdownContent, useTestSet) {

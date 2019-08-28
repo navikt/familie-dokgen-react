@@ -5,7 +5,7 @@ import {downloadPdf, getTemplateContentInHTML, updatePreviewFormat} from '../red
 import Tabs from 'nav-frontend-tabs';
 import Preview from "../components/Preview";
 import Colors from '../assets/Colors'
-import { MOBIL, NETTBRETT, PDF, WEB } from "./Constants";
+import { MOBIL, NETTBRETT, PDF, WEB } from "../AppConstants";
 
 class PreviewContainer extends Component {
 
