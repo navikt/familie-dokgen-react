@@ -12,7 +12,8 @@ import {
     ADD_TEST_DATA_NAME,
     SET_SELECTED_TEST_DATA,
     GET_EMPTY_TEST_SET,
-    PREVIEW_ERROR
+    PREVIEW_ERROR,
+    SET_AKTIV_TAB
 } from "../actions/templateAction";
 
 const initialState = { 
@@ -20,6 +21,7 @@ const initialState = {
     templateIsSelected: false,
     templateNames : [],
     editorContent : "",
+    aktivTab: 0,
     previewContent : "",
     readOnly: true,
     pdfContent : null,
@@ -27,12 +29,12 @@ const initialState = {
     testDataNames : [],
     selectedTestData : "",
     emptyTestSet : "",
-    errorContent : null
+    errorContent : null,
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
-     case SELECTED_TEMPLATE:
+    case SELECTED_TEMPLATE:
       return {
         ...state, 
        selectedTemplate: action.payload,
@@ -116,6 +118,12 @@ export default (state = initialState, action) => {
         return {
             ...state,
             errorContent: action.payload
+        };
+        case SET_AKTIV_TAB:
+        return {
+            ...state,
+            aktivTab: action.payload,
+            readOnly: action.payload===1
         };
     default:
       return state
