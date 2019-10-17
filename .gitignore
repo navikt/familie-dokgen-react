@@ -572,3 +572,5 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/node,intellij,visualstudio,jetbrains+all
+
+build
